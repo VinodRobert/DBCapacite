@@ -1,0 +1,32 @@
+/****** Object:  Table [PB].[PAYMENTBANKS]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [PB].[PAYMENTBANKS](
+	[BANKID] [int] NOT NULL,
+	[BORGID] [int] NULL,
+	[BANKNAME] [varchar](150) NULL,
+	[BANKREFERENCECODE] [varchar](15) NULL,
+	[BANKACCOUNT] [varchar](55) NULL,
+	[BANKBRANCH] [varchar](100) NULL,
+	[ACCOUNTTYPE] [varchar](15) NULL,
+	[LEDGERCODE] [varchar](25) NULL,
+	[SALUTATION] [varchar](100) NULL,
+	[ADDRESS1] [varchar](250) NULL,
+	[ADDRESS2] [varchar](250) NULL,
+	[ADDRESS3] [varchar](250) NULL,
+	[STATE] [varchar](80) NULL,
+	[PIN] [varchar](15) NULL,
+	[REFERENCE] [varchar](80) NULL,
+	[YEARREFERENCE] [varchar](30) NULL,
+	[SERIALNUMBER] [int] NULL,
+	[CHEQUE] [bit] NULL,
+	[RTGS] [bit] NULL,
+	[API] [bit] NULL,
+	[RTGSGROUPING] [int] NULL,
+	[LETTERHEADID] [int] NULL,
+ CONSTRAINT [PK_PAYMENTBANKS] PRIMARY KEY CLUSTERED 
+(
+	[BANKID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]

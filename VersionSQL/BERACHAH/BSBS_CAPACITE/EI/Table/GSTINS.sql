@@ -1,0 +1,26 @@
+/****** Object:  Table [EI].[GSTINS]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [EI].[GSTINS](
+	[GSTINID] [int] IDENTITY(1,1) NOT NULL,
+	[CREDNO] [varchar](15) NULL,
+	[GSTIN] [varchar](20) NULL,
+	[LEGALNAME] [varchar](100) NULL,
+	[ADDRESS1] [varchar](100) NULL,
+	[ADDRESS2] [varchar](100) NULL,
+	[LOCATION] [varchar](100) NULL,
+	[PIN] [varchar](6) NULL,
+	[STATECODE] [varchar](3) NULL,
+	[TRADENAME] [varchar](10) NULL,
+	[PHONE] [varchar](10) NULL,
+	[EMAIL] [varchar](100) NULL,
+	[PLACEOFSUPPLY] [varchar](3) NULL,
+	[VALIDATED] [int] NULL,
+	[GSTINCATEGORY] [int] NULL,
+	[STATENAME] [varchar](75) NULL,
+ CONSTRAINT [PK__GSTINS__2861689590229D7F] PRIMARY KEY CLUSTERED 
+(
+	[GSTINID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]

@@ -1,0 +1,48 @@
+/****** Object:  Table [BT].[BUDGETMATERIALMOVEMENTDETAIL]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [BT].[BUDGETMATERIALMOVEMENTDETAIL](
+	[DETAILID] [bigint] IDENTITY(1,1) NOT NULL,
+	[PROJECTCODE] [int] NULL,
+	[TOOLCODE] [varchar](35) NULL,
+	[TOOLNAME] [varchar](200) NULL,
+	[BUYINGCATEGORY] [varchar](15) NULL,
+	[CONVERTIONFACTOR] [decimal](18, 4) NULL,
+	[REQID] [int] NULL,
+	[REQDATE] [datetime] NULL,
+	[REQNUMBER] [varchar](25) NULL,
+	[LINENUMBER] [int] NULL,
+	[STOCKCODE] [varchar](25) NULL,
+	[STOCKNAME] [varchar](500) NULL,
+	[PRQTY] [decimal](18, 4) NULL,
+	[PRUOM] [varchar](15) NULL,
+	[PRRATE] [decimal](18, 4) NULL,
+	[PRAMOUNT] [decimal](18, 2) NULL,
+	[PRSTATUS] [int] NULL,
+	[OPENPR] [decimal](18, 4) NULL,
+	[CANCELLEDQTY] [decimal](18, 4) NULL,
+	[REJECTQTY] [decimal](18, 4) NULL,
+	[BUDGETPRQTY] [decimal](18, 4) NULL,
+	[ORDID] [int] NULL,
+	[ORDNUMBER] [varchar](25) NULL,
+	[ORDDATE] [datetime] NULL,
+	[ORDQTY] [decimal](18, 4) NULL,
+	[ORDRATE] [decimal](18, 4) NULL,
+	[ORDAMOUNT] [decimal](18, 4) NULL,
+	[ORDSTATUS] [int] NULL,
+	[BUDGETORDERQTY] [decimal](18, 4) NULL,
+	[PRPOQTYDIFF] [decimal](18, 4) NULL,
+	[BUDGETPRPODIFF] [decimal](18, 4) NULL,
+	[DELIVEREDQTY] [decimal](18, 4) NULL,
+	[DELIVERYAMOUNT] [decimal](18, 4) NULL,
+	[BUDGETDELIVERY] [decimal](18, 4) NULL,
+	[COMPLETED] [decimal](18, 4) NULL,
+	[ORDCOMPDIFF] [decimal](18, 4) NULL,
+	[BUDGETORDCOMPDIFF] [decimal](18, 4) NULL,
+	[FINALIZED] [int] NULL,
+ CONSTRAINT [PK__BUDGETMA__0E176F9AB314DE57] PRIMARY KEY CLUSTERED 
+(
+	[DETAILID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]

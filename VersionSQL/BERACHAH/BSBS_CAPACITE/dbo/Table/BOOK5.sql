@@ -1,0 +1,42 @@
+/****** Object:  Table [dbo].[BOOK5]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [dbo].[BOOK5](
+	[SubNumber] [nvarchar](255) NULL,
+	[SubName] [nvarchar](255) NULL,
+	[SubAddress1] [nvarchar](255) NULL,
+	[SubAddress2] [nvarchar](255) NULL,
+	[SubAddress3] [nvarchar](255) NULL,
+	[SubPCode] [nvarchar](255) NULL,
+	[SubTel] [nvarchar](255) NULL,
+	[SubFax] [nvarchar](255) NULL,
+	[SubeMail] [nvarchar](255) NULL,
+	[SubContact] [nvarchar](255) NULL,
+	[SubURL] [nvarchar](255) NULL,
+	[SubContactCell] [nvarchar](255) NULL,
+	[SubType] [nvarchar](255) NULL,
+	[SubPayMethod] [nvarchar](255) NULL,
+	[SubGLCode] [float] NULL,
+	[SubVATNo] [nvarchar](255) NULL,
+	[ToJoinSUB] [float] NULL,
+	[SubSelect] [nvarchar](255) NULL,
+	[SubStatus] [float] NULL,
+	[Actid] [float] NULL,
+	[BEStatus] [nvarchar](255) NULL,
+	[CATEGORY] [nvarchar](255) NULL,
+	[SUBTAXNO] [nvarchar](255) NULL,
+	[SUBBUSREG] [nvarchar](255) NULL,
+	[SUBNIDCN] [nvarchar](255) NULL,
+	[BeType] [nvarchar](255) NULL,
+	[BeLevel] [float] NULL,
+	[BeVav] [nvarchar](255) NULL,
+	[HaveSelfInvoice] [float] NULL,
+	[PROVINCEID] [float] NULL,
+	[CUSTOMS] [nvarchar](255) NULL,
+	[EXCISE] [nvarchar](255) NULL,
+	[SERVICETAX] [nvarchar](255) NULL,
+	[PAN] [nvarchar](255) NULL,
+	[ISOCERTIFICATION] [nvarchar](255) NULL,
+	[BEEXPIRYDATE] [nvarchar](255) NULL
+) ON [PRIMARY]

@@ -1,0 +1,26 @@
+/****** Object:  Table [dbo].[CABATCHHEADER]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [dbo].[CABATCHHEADER](
+	[HeaderID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[SiteRef] [char](50) NOT NULL,
+	[BatchRef] [char](50) NOT NULL,
+	[PAYROLLID] [int] NOT NULL,
+	[PERIODNO] [smallint] NOT NULL,
+	[RUNNO] [smallint] NOT NULL,
+	[YEARNO] [smallint] NOT NULL,
+	[LockHolder] [int] NOT NULL,
+	[LockRequestor] [int] NOT NULL,
+	[valid] [bit] NOT NULL,
+	[posted] [bit] NOT NULL,
+ CONSTRAINT [PK_CABatchHeader] PRIMARY KEY CLUSTERED 
+(
+	[HeaderID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+) ON [PRIMARY]
+
+ALTER TABLE [dbo].[CABATCHHEADER] ADD  CONSTRAINT [DF_CABATCHHEADER_LockHolder]  DEFAULT ((0)) FOR [LockHolder]
+ALTER TABLE [dbo].[CABATCHHEADER] ADD  CONSTRAINT [DF_CABATCHHEADER_LockRequestor_1]  DEFAULT ((0)) FOR [LockRequestor]
+ALTER TABLE [dbo].[CABATCHHEADER] ADD  CONSTRAINT [DF_CABatchHeader_valid]  DEFAULT ((0)) FOR [valid]
+ALTER TABLE [dbo].[CABATCHHEADER] ADD  CONSTRAINT [DF_CABatchHeader_posted]  DEFAULT ((0)) FOR [posted]

@@ -1,0 +1,44 @@
+/****** Object:  Table [dbo].[INVETransListing]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [dbo].[INVETransListing](
+	[IRID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[IRUserID] [int] NOT NULL,
+	[IRBorgID] [int] NOT NULL,
+	[IRTransTableID] [int] NOT NULL,
+	[IRGlCode] [char](10) NOT NULL,
+	[IRTyeName] [char](25) NOT NULL,
+	[IRSStktore] [char](15) NOT NULL,
+	[IRStkCode] [char](20) NOT NULL,
+	[IRTrasRef] [char](10) NOT NULL,
+	[IRreqNo] [char](55) NOT NULL,
+	[IRQuantity] [numeric](18, 4) NULL,
+	[IRToBorg] [int] NOT NULL,
+	[IRTrasDate] [datetime] NOT NULL,
+	[IRReadingID] [int] NULL,
+	[IRRemove] [bit] NOT NULL,
+ CONSTRAINT [PK_INVTransListing] PRIMARY KEY CLUSTERED 
+(
+	[IRID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+) ON [PRIMARY]
+
+ALTER TABLE [dbo].[INVETransListing] ADD  CONSTRAINT [DF_INVTransListing_IRTrasDate]  DEFAULT (getdate()) FOR [IRTrasDate]
+ALTER TABLE [dbo].[INVETransListing] ADD  CONSTRAINT [DF_INVTransListing_IRRemove]  DEFAULT (0) FOR [IRRemove]
+ALTER TABLE [dbo].[INVETransListing]  WITH CHECK ADD  CONSTRAINT [FK_INVETransListing_BORGS] FOREIGN KEY([IRBorgID])
+REFERENCES [dbo].[BORGS] ([BORGID])
+ALTER TABLE [dbo].[INVETransListing] CHECK CONSTRAINT [FK_INVETransListing_BORGS]
+ALTER TABLE [dbo].[INVETransListing]  WITH CHECK ADD  CONSTRAINT [FK_INVETransListing_BORGS1] FOREIGN KEY([IRToBorg])
+REFERENCES [dbo].[BORGS] ([BORGID])
+ALTER TABLE [dbo].[INVETransListing] CHECK CONSTRAINT [FK_INVETransListing_BORGS1]
+ALTER TABLE [dbo].[INVETransListing]  WITH NOCHECK ADD  CONSTRAINT [FK_INVETransListing_INVENTORY_2] FOREIGN KEY([IRSStktore], [IRStkCode], [IRBorgID])
+REFERENCES [dbo].[INVENTORY] ([StkStore], [StkCode], [BorgID])
+ALTER TABLE [dbo].[INVETransListing] CHECK CONSTRAINT [FK_INVETransListing_INVENTORY_2]
+ALTER TABLE [dbo].[INVETransListing]  WITH CHECK ADD  CONSTRAINT [FK_INVETransListing_LEDGERCODES] FOREIGN KEY([IRGlCode])
+REFERENCES [dbo].[LEDGERCODES] ([LedgerCode])
+ALTER TABLE [dbo].[INVETransListing] CHECK CONSTRAINT [FK_INVETransListing_LEDGERCODES]
+ALTER TABLE [dbo].[INVETransListing]  WITH CHECK ADD  CONSTRAINT [FK_INVETransListing_USERS] FOREIGN KEY([IRUserID])
+REFERENCES [dbo].[USERS] ([USERID])
+ON UPDATE CASCADE
+ALTER TABLE [dbo].[INVETransListing] CHECK CONSTRAINT [FK_INVETransListing_USERS]

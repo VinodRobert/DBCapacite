@@ -1,0 +1,44 @@
+/****** Object:  Procedure [BI].[spCompleteDump]    Committed by VersionSQL https://www.versionsql.com ******/
+
+CREATE PROCEDURE BI.spCompleteDump(@FINYEAR INT,@STARTPERIOD INT,@ENDPERIOD INT)
+AS
+SELECT 
+         T.YEAR,
+		 T.PERIOD,
+		 T.ORGID,
+		 T.PDATE,
+		 T.BATCHREF,
+		 T.TRANSREF,
+		 T.TRANSTYPE,
+		 T.LEDGERCODE,
+		 T.CONTRACT,
+	     T.ACTIVITY,
+		 T.DESCRIPTION,
+		 T.CURRENCY,
+		 DEBIT=  CASE 
+             WHEN (T.CURRENCY  <> 'INR' ) and T.DEBIT<> 0 THEN T.HOMECURRAMOUNT
+             ELSE T.DEBIT
+             END,
+         CREDIT = CASE 
+             WHEN (T.CURRENCY  <> 'INR' ) and T.CREDIT<> 0 THEN T.HOMECURRAMOUNT
+             ELSE T.CREDIT
+           END ,
+		 T.CREDNO,
+		 T.STORE,
+		 T.PLANTNO,
+		 T.STOCKNO,
+		 T.QUANTITY,
+		 T.UNIT,
+		 T.RATE,
+		 T.ORDERNO,
+		 T.HOMECURRAMOUNT,
+		 T.CONVERSIONRATE,
+		 T.TRANGRP,
+		 T.TRANSID ,
+		 T.REQNO AS GRN
+	   INTO BI.LEDGERDUMP2019
+	   FROM 
+		 TRANSACTIONS T
+		WHERE
+		 T.YEAR = @FINYEAR AND
+		 T.PERIOD BETWEEN  @STARTPERIOD AND  @ENDPERIOD  

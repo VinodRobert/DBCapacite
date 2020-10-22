@@ -1,0 +1,15 @@
+/****** Object:  Procedure [BI].[spGetFullLedgerIDs]    Committed by VersionSQL https://www.versionsql.com ******/
+
+CREATE PROCEDURE [BI].[spGetFullLedgerIDs] 
+AS
+
+
+SELECT L.LEDGERCODE,(L.LEDGERCODE+'- '+ L.LEDGERNAME) LEDGERNAME ,L.LEDGERID,L.LEDGERALLOC 
+FROM LEDGERCODES L 
+WHERE L.LEDGERCODE IN (SELECT DISTINCT LEDGERCODE FROM TRANSACTIONS) 
+ORDER BY LEDGERCODE 
+ 
+
+
+ 
+  

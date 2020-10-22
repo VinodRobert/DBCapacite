@@ -1,0 +1,8 @@
+/****** Object:  View [dbo].[bs_RSC_CONTRACTS]    Committed by VersionSQL https://www.versionsql.com ******/
+
+CREATE VIEW dbo.bs_RSC_CONTRACTS
+AS
+SELECT DISTINCT TOP 100 PERCENT PAYROLLID, CONTRNUMBER, EMPNUMBER
+FROM         dbo.CLOCKCARDS
+WHERE     (CONTRNUMBER <> N'')
+ORDER BY PAYROLLID

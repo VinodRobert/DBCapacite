@@ -1,0 +1,23 @@
+/****** Object:  Table [dbo].[EmailLog]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [dbo].[EmailLog](
+	[EmailLogId] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[FromAddress] [char](255) NOT NULL,
+	[ToAddress] [char](255) NOT NULL,
+	[Subject] [char](255) NOT NULL,
+	[SMTP] [char](255) NOT NULL,
+	[SMTPPort] [int] NOT NULL,
+	[DateSent] [datetime] NOT NULL,
+	[SendStatus] [char](32) NOT NULL,
+	[ErrorMessage] [char](255) NULL,
+ CONSTRAINT [PK_EmailLog] PRIMARY KEY NONCLUSTERED 
+(
+	[EmailLogId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY],
+ CONSTRAINT [IX_EmailLog] UNIQUE NONCLUSTERED 
+(
+	[EmailLogId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+) ON [PRIMARY]

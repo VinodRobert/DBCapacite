@@ -1,0 +1,62 @@
+/****** Object:  Table [dbo].[PlantHireHeader]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [dbo].[PlantHireHeader](
+	[HireHNumber] [char](10) NOT NULL,
+	[HireHAllocation] [char](25) NULL,
+	[HireHDescription] [char](210) NOT NULL,
+	[ContrNumber] [nvarchar](10) NULL,
+	[DivIDTo] [int] NULL,
+	[DebtNumber] [char](10) NULL,
+	[SubNumber] [char](10) NULL,
+	[HireHStartDate] [datetime] NOT NULL,
+	[HireHEndDate] [datetime] NULL,
+	[HireHPosted] [bit] NOT NULL,
+	[HireHRemove] [bit] NULL,
+	[UserID] [char](10) NOT NULL,
+	[BorgID] [int] NOT NULL,
+	[HireHSort] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[PlantDCostGl] [char](10) NULL,
+	[REVENUEGL] [nvarchar](10) NOT NULL,
+	[DIVID] [int] NOT NULL,
+	[ISRECUR] [bit] NULL,
+ CONSTRAINT [PK_PlantHireHeader] PRIMARY KEY CLUSTERED 
+(
+	[HireHNumber] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY],
+ CONSTRAINT [IX_PlantHireHeader] UNIQUE NONCLUSTERED 
+(
+	[HireHNumber] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+) ON [PRIMARY]
+
+ALTER TABLE [dbo].[PlantHireHeader] ADD  CONSTRAINT [DF_PlantHireHeader_HirePosted]  DEFAULT (0) FOR [HireHPosted]
+ALTER TABLE [dbo].[PlantHireHeader] ADD  CONSTRAINT [DF_PlantHireHeader_HireRemove]  DEFAULT (0) FOR [HireHRemove]
+ALTER TABLE [dbo].[PlantHireHeader] ADD  CONSTRAINT [DF_PLANTHIREHEADER_REVENUEGL]  DEFAULT ('') FOR [REVENUEGL]
+ALTER TABLE [dbo].[PlantHireHeader] ADD  CONSTRAINT [DF_PLANTHIREHEADER_DIVID]  DEFAULT ('-1') FOR [DIVID]
+ALTER TABLE [dbo].[PlantHireHeader] ADD  CONSTRAINT [DF_PLANTHIREHEADER_ISRECUR]  DEFAULT ('FALSE') FOR [ISRECUR]
+ALTER TABLE [dbo].[PlantHireHeader]  WITH CHECK ADD  CONSTRAINT [FK_PlantHireHeader_BORGS] FOREIGN KEY([BorgID])
+REFERENCES [dbo].[BORGS] ([BORGID])
+ON UPDATE CASCADE
+ALTER TABLE [dbo].[PlantHireHeader] CHECK CONSTRAINT [FK_PlantHireHeader_BORGS]
+ALTER TABLE [dbo].[PlantHireHeader]  WITH CHECK ADD  CONSTRAINT [FK_PlantHireHeader_CONTRACTS] FOREIGN KEY([ContrNumber])
+REFERENCES [dbo].[CONTRACTS] ([CONTRNUMBER])
+ON UPDATE CASCADE
+ALTER TABLE [dbo].[PlantHireHeader] CHECK CONSTRAINT [FK_PlantHireHeader_CONTRACTS]
+ALTER TABLE [dbo].[PlantHireHeader]  WITH CHECK ADD  CONSTRAINT [FK_PlantHireHeader_DEBTORS] FOREIGN KEY([DebtNumber])
+REFERENCES [dbo].[DEBTORS] ([DebtNumber])
+ON UPDATE CASCADE
+ALTER TABLE [dbo].[PlantHireHeader] CHECK CONSTRAINT [FK_PlantHireHeader_DEBTORS]
+ALTER TABLE [dbo].[PlantHireHeader]  WITH CHECK ADD  CONSTRAINT [FK_PlantHireHeader_DIVISIONS] FOREIGN KEY([DivIDTo])
+REFERENCES [dbo].[DIVISIONS] ([DivID])
+ON UPDATE CASCADE
+ALTER TABLE [dbo].[PlantHireHeader] CHECK CONSTRAINT [FK_PlantHireHeader_DIVISIONS]
+ALTER TABLE [dbo].[PlantHireHeader]  WITH CHECK ADD  CONSTRAINT [FK_PlantHireHeader_SUBCONTRACTORS] FOREIGN KEY([SubNumber])
+REFERENCES [dbo].[SUBCONTRACTORS] ([SubNumber])
+ON UPDATE CASCADE
+ALTER TABLE [dbo].[PlantHireHeader] CHECK CONSTRAINT [FK_PlantHireHeader_SUBCONTRACTORS]
+ALTER TABLE [dbo].[PlantHireHeader]  WITH CHECK ADD  CONSTRAINT [FK_PLANTTYPES_TypeName] FOREIGN KEY([HireHAllocation])
+REFERENCES [dbo].[PLANTTYPES] ([TypeName])
+ON UPDATE CASCADE
+ALTER TABLE [dbo].[PlantHireHeader] CHECK CONSTRAINT [FK_PLANTTYPES_TypeName]

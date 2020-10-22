@@ -1,0 +1,43 @@
+/****** Object:  Table [BS].[SALARYTABLE]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [BS].[SALARYTABLE](
+	[EMPNUMBER] [varchar](10) NOT NULL,
+	[YEAR] [int] NOT NULL,
+	[MONTH] [int] NOT NULL,
+	[PAYROLLID] [int] NOT NULL,
+	[EMPNAME] [varchar](100) NULL,
+	[DESIGNATION] [varchar](100) NULL,
+	[GRADE] [varchar](50) NULL,
+	[JOINDATE] [datetime] NULL,
+	[BANKACCNO] [varchar](25) NULL,
+	[BANKNAME] [varchar](25) NULL,
+	[PFNUMBER] [varchar](25) NULL,
+	[ESINUMBER] [varchar](25) NULL,
+	[PAYPOINT] [varchar](15) NULL,
+	[PAYBY] [varchar](50) NULL,
+	[BASIC] [decimal](18, 2) NULL,
+	[DA] [decimal](18, 2) NULL,
+	[HRA] [decimal](18, 2) NULL,
+	[MEDICAL ALLOWANCE] [decimal](18, 2) NULL,
+	[SPECIAL ALLOWANCE] [decimal](18, 2) NULL,
+	[OTHER ADDITIONS] [decimal](18, 2) NULL,
+	[SALARY ARREARS] [decimal](18, 2) NULL,
+	[TOTAL EARNINGS] [decimal](18, 2) NULL,
+	[PF] [decimal](18, 2) NULL,
+	[PROFESSIONAL TAX] [decimal](18, 2) NULL,
+	[ESI] [decimal](18, 2) NULL,
+	[SALARY ADVANCE] [decimal](18, 2) NULL,
+	[LOAN RECOVERY] [decimal](18, 2) NULL,
+	[LOSS OF PAY] [decimal](18, 2) NULL,
+	[TELEPHONE] [decimal](18, 2) NULL,
+	[OTHER DEDUCTIONS] [decimal](18, 2) NULL,
+	[INCOME TAX] [decimal](18, 2) NULL,
+	[TOTAL DEDUCTIONS] [decimal](18, 2) NULL,
+	[NETPAY] [decimal](18, 2) NULL,
+	[LOP] [decimal](18, 2) NULL,
+	[DAYSWORKED] [decimal](18, 2) NULL,
+	[PAYROLLMONTH] [varchar](25) NULL,
+	[PAYPOINTNAME] [varchar](150) NULL
+) ON [PRIMARY]

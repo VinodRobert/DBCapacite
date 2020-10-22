@@ -1,0 +1,12 @@
+/****** Object:  Table [dbo].[CREDITORSCATE]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [dbo].[CREDITORSCATE](
+	[CredCateNumber] [nchar](10) NOT NULL,
+	[CredCateName] [nchar](80) NULL,
+ CONSTRAINT [PK_CreditorsCate] PRIMARY KEY CLUSTERED 
+(
+	[CredCateNumber] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+) ON [PRIMARY]

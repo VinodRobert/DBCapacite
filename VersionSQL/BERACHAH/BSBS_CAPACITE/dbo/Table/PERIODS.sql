@@ -1,0 +1,30 @@
+/****** Object:  Table [dbo].[PERIODS]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [dbo].[PERIODS](
+	[Per1] [char](10) NULL,
+	[Per1End] [datetime] NULL,
+	[Per2] [char](10) NULL,
+	[Per2End] [datetime] NULL,
+	[Per3] [char](10) NULL,
+	[Per3End] [datetime] NULL,
+	[Per4] [char](10) NULL,
+	[Per4End] [datetime] NULL,
+	[Per5] [char](10) NULL,
+	[Per5End] [datetime] NULL,
+	[Per6] [char](10) NULL,
+	[Per6End] [datetime] NULL,
+	[Per7] [char](10) NULL,
+	[Per7End] [datetime] NULL,
+	[Per8] [char](10) NULL,
+	[Per8End] [datetime] NULL,
+	[Per9] [char](10) NULL,
+	[Per9End] [char](10) NULL,
+	[Per10] [char](10) NULL,
+	[Per10End] [datetime] NULL,
+	[Per11] [char](10) NULL,
+	[Per11End] [datetime] NULL,
+	[Per12] [char](10) NULL,
+	[Per12End] [datetime] NULL
+) ON [PRIMARY]

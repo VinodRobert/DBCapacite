@@ -1,0 +1,22 @@
+/****** Object:  Procedure [BT].[spFetchMaterialSpreadDetails]    Committed by VersionSQL https://www.versionsql.com ******/
+
+CREATE PROCEDURE [BT].[spFetchMaterialSpreadDetails](@PROJECTCODE INT,@STARTPERIOD INT,@ENDPERIOD INT)
+AS
+
+--DECLARE @FIRSTMATERIALID INT
+--SELECT  TOP 1  @FIRSTMATERIALID = MATERIALID   FROM BT.MATERIAL WHERE PROJECTCODE=@PROJECTCODE 
+ 
+
+SELECT  LTRIM(RTRIM(YPM.YEAR))+'/'+LTRIM(RTRIM(YPM.MONTHNAME)) AS PERIODNAME 
+FROM BT.YearPeriodMaster YPM WHERE YPM.YearPeriodID IN 
+(SELECT MONTHID FROM BT.ProjectMaterialBudgetDetail BTMS 
+ INNER JOIN BT.ProjectMaterialBudgetmaster BTMA ON BTMS.ProjectMaterialBudgetID = BTMA.ProjectMaterialBudgetCode 
+ WHERE PROJECTCODE = @PROJECTCODE  AND  MONTHID BETWEEN @STARTPERIOD AND @ENDPERIOD) ORDER BY YPM.YearPeriodID
+
+
+
+ 
+
+
+
+ 

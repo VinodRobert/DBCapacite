@@ -1,0 +1,9 @@
+/****** Object:  Procedure [BS].[spStockReport]    Committed by VersionSQL https://www.versionsql.com ******/
+
+CREATE PROCEDURE BS.spStockReport(@STORECODE VARCHAR(10),@ORGID INT)
+AS
+
+CREATE TABLE #TEMP0(TRANSDATE DATETIME,TRANSID INT, STOCKNO VARCHAR(10), RECEIPTS DECIMAL(18,4), INVALUE DECIMAL(18,2), ISSUES DECIMAL(18,4), OUTVALUE DECIMAL(18,2)) 
+
+
+ 

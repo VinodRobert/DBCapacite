@@ -1,0 +1,14 @@
+/****** Object:  Procedure [BT].[spFetchImagesReport_old]    Committed by VersionSQL https://www.versionsql.com ******/
+
+--Select * from bt.dpr
+--select * from bt.sales
+
+--[BT].[spFetchImagesReport] 2,'30-01-2018','01-10-2019'
+CREATE PROCEDURE [BT].[spFetchImagesReport_old](@PROJECTCODE INT, @STARTDATESTRING  VARCHAR(15),@ENDDATESTRING  VARCHAR(15)) 
+AS
+DECLARE @DPRSTARTDATE DATETIME 
+SET @DPRSTARTDATE = CONVERT(DATETIME,@STARTDATESTRING,103)
+DECLARE @DPRENDDATE DATETIME 
+SET @DPRENDDATE = CONVERT(DATETIME,@ENDDATESTRING,103)
+
+SELECT DPRDate AS Date,Narration as Description,Path FROM BT.DPRImage WHERE ProjectID=@PROJECTCODE AND DPRDate BETWEEN @DPRSTARTDATE AND @DPRENDDATE ORDER BY DPRDate 

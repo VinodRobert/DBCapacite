@@ -1,0 +1,24 @@
+/****** Object:  Procedure [BT].[AddEditDPR]    Committed by VersionSQL https://www.versionsql.com ******/
+
+--SELECT * FROM BT.SALES
+
+--CREATE TABLE BT.DPR(DPRID INT Primary Key,ProjectCode int, BOQNumber Varchar(15), DPRDate DateTime, DPRQty Decimal(18,2) )
+
+CREATE Procedure BT.AddEditDPR(@DPRID int,@ProjectCode int, @BOQNumber varchar(15), @DPRDATESTRING Varchar(15), @DPRQty decimal(18,2))
+as
+DECLARE @NEXTID INT
+SELECT @NEXTID =ISNULL( MAX(DPRID) ,0 ) FROM BT.DPR 
+SET @NEXTID = @NEXTID + 1
+
+DECLARE @DPRDATE DATETIME 
+SET @DPRDATE = CONVERT(DATETIME,@DPRDATESTRING,103);
+
+IF @DPRID= 0 
+ BEGIN
+       INSERT INTO BT.DPR(DPRID,PROJECTCODE,BOQNUMBER,DPRDATE,DPRQTY)  
+       VALUES     (@NEXTID,@ProjectCode,@BOQNUMBER,@DPRDATE,@DPRQTY)
+ END
+ELSE
+ BEGIN
+       UPDATE BT.DPR SET DPRQTY = @DPRQTY WHERE DPRID=@DPRID
+ END

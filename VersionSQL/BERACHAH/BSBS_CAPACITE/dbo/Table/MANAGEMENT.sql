@@ -1,0 +1,23 @@
+/****** Object:  Table [dbo].[MANAGEMENT]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [dbo].[MANAGEMENT](
+	[Month] [int] NOT NULL,
+	[Revenue] [money] NOT NULL,
+	[Costs] [money] NOT NULL,
+	[SubCon] [money] NOT NULL,
+	[Labour] [money] NOT NULL,
+	[Materials] [money] NOT NULL,
+	[OfficeCosts] [money] NOT NULL,
+	[VehicleCosts] [money] NOT NULL
+) ON [PRIMARY]
+
+ALTER TABLE [dbo].[MANAGEMENT] ADD  CONSTRAINT [DF_MANAGEMENT_Month]  DEFAULT (1) FOR [Month]
+ALTER TABLE [dbo].[MANAGEMENT] ADD  CONSTRAINT [DF_MANAGEMENT_Revenue]  DEFAULT (0) FOR [Revenue]
+ALTER TABLE [dbo].[MANAGEMENT] ADD  CONSTRAINT [DF_MANAGEMENT_Costs]  DEFAULT (0) FOR [Costs]
+ALTER TABLE [dbo].[MANAGEMENT] ADD  CONSTRAINT [DF_MANAGEMENT_SubCon]  DEFAULT (0) FOR [SubCon]
+ALTER TABLE [dbo].[MANAGEMENT] ADD  CONSTRAINT [DF_MANAGEMENT_Labour]  DEFAULT (0) FOR [Labour]
+ALTER TABLE [dbo].[MANAGEMENT] ADD  CONSTRAINT [DF_MANAGEMENT_Materials]  DEFAULT (0) FOR [Materials]
+ALTER TABLE [dbo].[MANAGEMENT] ADD  CONSTRAINT [DF_MANAGEMENT_OfficeCosts]  DEFAULT (0) FOR [OfficeCosts]
+ALTER TABLE [dbo].[MANAGEMENT] ADD  CONSTRAINT [DF_MANAGEMENT_VehicleCosts]  DEFAULT (0) FOR [VehicleCosts]

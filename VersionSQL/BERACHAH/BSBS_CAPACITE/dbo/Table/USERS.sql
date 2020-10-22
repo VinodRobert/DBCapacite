@@ -1,0 +1,280 @@
+/****** Object:  Table [dbo].[USERS]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [dbo].[USERS](
+	[LOGINID] [char](15) NOT NULL,
+	[PASSWORD] [char](150) NOT NULL,
+	[USERNAME] [char](75) NULL,
+	[STARTIN] [smallint] NOT NULL,
+	[DEPARTMENT] [char](30) NULL,
+	[TELEPHONE1] [char](30) NULL,
+	[TELEPHONE2] [char](30) NULL,
+	[TELEPHONE3] [char](30) NULL,
+	[LOCATION] [char](50) NULL,
+	[FAX1] [char](30) NULL,
+	[EMAIL] [char](60) NULL,
+	[VALIDFROM] [datetime] NOT NULL,
+	[VALIDTO] [datetime] NOT NULL,
+	[NEVEREXPIRES] [bit] NOT NULL,
+	[ISADMIN] [int] NOT NULL,
+	[LOCKED] [bit] NOT NULL,
+	[FAX2] [char](30) NULL,
+	[FAX3] [char](30) NULL,
+	[USERID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[ITEMSTOLIST] [int] NOT NULL,
+	[HOMEORGID] [int] NOT NULL,
+	[ERFQADMIN] [bit] NOT NULL,
+	[FIRSTTIMELOGIN] [bit] NOT NULL,
+	[EID] [char](10) NOT NULL,
+	[LASTLOGIN] [datetime] NULL,
+	[LASTTCPIP] [char](50) NULL,
+	[ISSELAPPROVER] [bit] NOT NULL,
+	[SCONRECAPP] [bit] NOT NULL,
+	[DEBTRECAPP] [bit] NOT NULL,
+	[INVAPP] [bit] NOT NULL,
+	[ROLEIDA] [int] NOT NULL,
+	[IsPlantAdmin] [bit] NOT NULL,
+	[IsWorkshopAdmin] [bit] NOT NULL,
+	[IsWSandPlantPosting] [bit] NOT NULL,
+	[CanSeeDashboard] [bit] NOT NULL,
+	[MasterAddEdit] [bit] NOT NULL,
+	[HASERFQ] [bit] NOT NULL,
+	[CANSEEDATABASEWARNING] [bit] NOT NULL,
+	[REMCAPP] [bit] NOT NULL,
+	[REMSAPP] [bit] NOT NULL,
+	[BENEFICIARYEFTCAPTURE] [bit] NOT NULL,
+	[REMCBAT] [bit] NOT NULL,
+	[REMSBAT] [bit] NOT NULL,
+	[ISBUYER] [bit] NOT NULL,
+	[ALLOWIC] [bit] NOT NULL,
+	[HASRPTLANG] [bit] NOT NULL,
+	[VIEWNEWSFEED] [bit] NOT NULL,
+	[IRECON] [int] NOT NULL,
+	[USERPERC] [decimal](18, 4) NOT NULL,
+	[OUTOFOFFICE] [bit] NOT NULL,
+	[WORKFLOWESCALATION] [bit] NOT NULL,
+	[PRLBATCHAPP] [bit] NOT NULL,
+	[SUBCCLAIMEDIT] [bit] NOT NULL,
+	[SUBCRECONBOQLINKSEDIT] [bit] NOT NULL,
+	[SUBCRECONCONTRACTVALUEEDIT] [bit] NOT NULL,
+	[POORDBY] [int] NOT NULL,
+	[LastPasswordChangedDate] [datetime] NULL,
+	[FailedPasswordAttemptCount] [int] NOT NULL,
+	[FailedPasswordAttemptWindowStart] [datetime] NULL,
+	[ITEMSTOEDIT] [int] NOT NULL,
+	[IDLETIMEOUT] [int] NULL,
+	[MOBILEPLANTCAPTURE] [bit] NOT NULL,
+	[ALLOWSITEREQATTENTIONTO] [bit] NOT NULL,
+	[ALLOWSITEREQATTENTIONTOPLANT] [bit] NOT NULL,
+	[ALLOWSITEREQATTENTIONTOPURCHASE] [bit] NOT NULL,
+	[ALLOWPLANTREQHIRECAPTURE] [bit] NOT NULL,
+	[ALLOWSUBMITSTOCKTAKERERATE] [bit] NOT NULL,
+	[ALLOWRECONCHANGEAPPROVAL] [bit] NOT NULL,
+	[ALLOWREMCPROCESS] [bit] NOT NULL,
+	[ALLOWREMSPROCESS] [bit] NOT NULL,
+	[CanSeeSiteAttendance] [bit] NOT NULL,
+	[ALLOWUNLINKCANDYPACKAGE] [bit] NOT NULL,
+	[BLOCKOWNJNLAPPROVAL] [int] NOT NULL,
+	[LockReleaseDateTime] [datetime] NULL,
+	[PasswordLastChangeDate] [datetime] NULL,
+	[BANKAPPROVALORG] [bit] NOT NULL,
+	[BANKAPPROVALCRED] [bit] NOT NULL,
+	[BANKAPPROVALSUBC] [bit] NOT NULL,
+	[BANKAPPROVALDEBT] [bit] NOT NULL,
+ CONSTRAINT [PK_USERS] PRIMARY KEY CLUSTERED 
+(
+	[USERID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+) ON [PRIMARY]
+
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_PASSWORD]  DEFAULT ('PASSWORD') FOR [PASSWORD]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_USERNAME]  DEFAULT ('') FOR [USERNAME]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_STARTIN_1]  DEFAULT (1) FOR [STARTIN]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_DEPARTMENT]  DEFAULT ('') FOR [DEPARTMENT]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_TELEPHONE1]  DEFAULT ('') FOR [TELEPHONE1]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_TELEPHONE2]  DEFAULT ('') FOR [TELEPHONE2]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_TELEPHONE3]  DEFAULT ('') FOR [TELEPHONE3]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_LOCATION]  DEFAULT ('') FOR [LOCATION]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_FAX1]  DEFAULT ('') FOR [FAX1]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_EMAIL]  DEFAULT ('') FOR [EMAIL]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_VALIDFROM_1]  DEFAULT (getdate()) FOR [VALIDFROM]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_VALIDTO_1]  DEFAULT (getdate() + 36500) FOR [VALIDTO]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_NEVEREXPIRES_1]  DEFAULT (0) FOR [NEVEREXPIRES]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_ISADMIN]  DEFAULT ((-1)) FOR [ISADMIN]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_LOCKED_1]  DEFAULT (0) FOR [LOCKED]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_FAX2]  DEFAULT ('') FOR [FAX2]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_FAX3]  DEFAULT ('') FOR [FAX3]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_ITEMSTOLIST]  DEFAULT (10) FOR [ITEMSTOLIST]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_ERFQADMIN]  DEFAULT (0) FOR [ERFQADMIN]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_FIRSTTIMELOGIN]  DEFAULT (1) FOR [FIRSTTIMELOGIN]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_EID]  DEFAULT ('') FOR [EID]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF__USERS__ISSELAPPR__50142EEF]  DEFAULT (0) FOR [ISSELAPPROVER]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF__USERS__SCONRECAP__248AB26C]  DEFAULT ('1') FOR [SCONRECAPP]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF__USERS__DEBTRECAP__257ED6A5]  DEFAULT ('1') FOR [DEBTRECAPP]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF__USERS__INVAPP__2672FADE]  DEFAULT ('1') FOR [INVAPP]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF__USERS__ROLEIDA__5EB75401]  DEFAULT ('-1') FOR [ROLEIDA]
+ALTER TABLE [dbo].[USERS] ADD  DEFAULT (0) FOR [IsPlantAdmin]
+ALTER TABLE [dbo].[USERS] ADD  DEFAULT (0) FOR [IsWorkshopAdmin]
+ALTER TABLE [dbo].[USERS] ADD  DEFAULT (0) FOR [IsWSandPlantPosting]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_CanSeeDashboard]  DEFAULT ((0)) FOR [CanSeeDashboard]
+ALTER TABLE [dbo].[USERS] ADD  DEFAULT ((0)) FOR [MasterAddEdit]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_HASERFQ]  DEFAULT ((0)) FOR [HASERFQ]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_CANSEEDATABASEWARNING]  DEFAULT ('1') FOR [CANSEEDATABASEWARNING]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_REMCAPP]  DEFAULT ('0') FOR [REMCAPP]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_REMSAPP]  DEFAULT ('0') FOR [REMSAPP]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_BENEFICIARYEFTCAPTURE]  DEFAULT ('0') FOR [BENEFICIARYEFTCAPTURE]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_REMCBAT]  DEFAULT ('0') FOR [REMCBAT]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_REMSBAT]  DEFAULT ('0') FOR [REMSBAT]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_ISBUYER]  DEFAULT ('0') FOR [ISBUYER]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_ALLOWIC]  DEFAULT ('1') FOR [ALLOWIC]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_HASRPTLANG]  DEFAULT ('0') FOR [HASRPTLANG]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_VIEWNEWSFEED]  DEFAULT (N'1') FOR [VIEWNEWSFEED]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_IRECON]  DEFAULT ((-1)) FOR [IRECON]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_USERPERC]  DEFAULT ((0)) FOR [USERPERC]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_OUTOFOFFICE]  DEFAULT (N'0') FOR [OUTOFOFFICE]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_WORKFLOWESCALATION]  DEFAULT (N'0') FOR [WORKFLOWESCALATION]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_PRLBATCHAPP]  DEFAULT (N'0') FOR [PRLBATCHAPP]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_SUBCCLAIMEDIT]  DEFAULT (N'0') FOR [SUBCCLAIMEDIT]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_SUBCRECONBOQLINKSEDIT]  DEFAULT (N'1') FOR [SUBCRECONBOQLINKSEDIT]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_SUBCRECONCONTRACTVALUEEDIT]  DEFAULT (N'1') FOR [SUBCRECONCONTRACTVALUEEDIT]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_POORDBY]  DEFAULT ((-1)) FOR [POORDBY]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_FailedPasswordAttemptCount]  DEFAULT ((-1)) FOR [FailedPasswordAttemptCount]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_ITEMSTOEDIT]  DEFAULT ((50)) FOR [ITEMSTOEDIT]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_MOBILEPLANTCAPTURE]  DEFAULT ('0') FOR [MOBILEPLANTCAPTURE]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_ALLOWSITEREQATTENTIONTO]  DEFAULT ('0') FOR [ALLOWSITEREQATTENTIONTO]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_ALLOWSITEREQATTENTIONTOPLANT]  DEFAULT ('0') FOR [ALLOWSITEREQATTENTIONTOPLANT]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_ALLOWSITEREQATTENTIONTOPURCHASE]  DEFAULT ('0') FOR [ALLOWSITEREQATTENTIONTOPURCHASE]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_ALLOWPLANTREQHIRECAPTURE]  DEFAULT (N'1') FOR [ALLOWPLANTREQHIRECAPTURE]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_ALLOWSUBMITSTOCKTAKERERATE]  DEFAULT (N'1') FOR [ALLOWSUBMITSTOCKTAKERERATE]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_ALLOWRECONCHANGEAPPROVAL]  DEFAULT (N'0') FOR [ALLOWRECONCHANGEAPPROVAL]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_ALLOWREMCPROCESS]  DEFAULT (N'0') FOR [ALLOWREMCPROCESS]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_ALLOWREMSPROCESS]  DEFAULT (N'0') FOR [ALLOWREMSPROCESS]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_CanSeeSiteAttendance]  DEFAULT (N'0') FOR [CanSeeSiteAttendance]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_ALLOWUNLINKCANDYPACKAGE]  DEFAULT (N'0') FOR [ALLOWUNLINKCANDYPACKAGE]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_BLOCKOWNJNLAPPROVAL]  DEFAULT ((0)) FOR [BLOCKOWNJNLAPPROVAL]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_BANKAPPROVALORG]  DEFAULT (N'0') FOR [BANKAPPROVALORG]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_BANKAPPROVALCRED]  DEFAULT (N'0') FOR [BANKAPPROVALCRED]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_BANKAPPROVALSUBC]  DEFAULT (N'0') FOR [BANKAPPROVALSUBC]
+ALTER TABLE [dbo].[USERS] ADD  CONSTRAINT [DF_USERS_BANKAPPROVALDEBT]  DEFAULT (N'0') FOR [BANKAPPROVALDEBT]
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+
+CREATE TRIGGER LOGMASTERUSERS ON USERS
+AFTER UPDATE, DELETE, INSERT
+AS 
+
+SET NOCOUNT ON
+
+declare @tableName varChar(25)
+declare @primaryKey varChar(25)
+declare @ignoreList varChar(500)
+
+set @tableName = 'USERS'
+set @primaryKey = 'USERID'
+set @ignoreList = 'PASSWORD'
+
+declare @action varChar(25)
+declare @logUserID int
+declare @logDateTime datetime
+declare @borgid int
+declare @page varChar(100)
+declare @info varChar(250)
+declare @application varChar(3)
+declare @version varChar(15)
+declare @context_info int
+declare @sqlTblCols nVarChar(max)
+declare @sql nVarChar(max)
+
+set @context_info = -1
+set @ignoreList = ',' + replace(@ignoreList, ' ', '') + ','
+set @action = ''
+set @logUserID = -1
+set @logDateTime = DATEADD(M, -1, getDate()) 
+set @borgid = -1
+set @page = ''
+set @info = ''
+set @application = ''
+set @version = ''
+set @sqlTblCols = ''
+set @sql = ''
+
+if exists(select * from INSERTED)
+BEGIN
+	if exists(select * from DELETED)
+	BEGIN
+		set @action = 'UPDATE'
+	END
+	ELSE
+	BEGIN
+		set @action = 'INSERT'
+	END
+END
+ELSE
+BEGIN
+	if exists(select * from DELETED)
+	BEGIN
+		set @action = 'DELETE'
+	END
+END
+ 
+select * into #inserted from INSERTED
+select * into #deleted from DELETED
+
+SELECT @context_info = cast(replace(cast(CONTEXT_INFO as varchar(128)), char(0) COLLATE SQL_Latin1_General_CP1_CI_AS,'') as int) FROM master.dbo.sysprocesses WHERE spid = @@SPID
+
+select @logUserID = isnull(USERID, -1),
+@logDateTime = isnull(LOGDATETIME, DATEADD(M, -1, getDate())),
+@borgid = isnull(BORGID, @borgid),
+@page = isnull(PAGE, @page),
+@info = isnull(INFO, @info),
+@application  = isnull(APPLICATION, @application),
+@version = isnull(VERSION, @version)
+from logcontext 
+where LOGID = @context_info
+	
+delete FROM LOGCONTEXT where LOGID = @context_info
+   
+if @action = 'UPDATE'
+BEGIN		
+	Select @sqlTblCols = @sqlTblCols + 'Case when rtrim(cast(IsNull(i.[' + Column_Name + '],0) as varChar(100)))=rtrim(cast(IsNull(d.[' + Column_Name + '],0) as varChar(100))) then '''' else ' + '''[' + Column_Name + ']:'' + rtrim(cast(IsNull(d.[' + Column_Name + '],0) as varChar(100)) collate SQL_LATIN1_GENERAL_CP1_CI_AS) + ''' + ' -> '' + rtrim(cast(IsNull(i.[' + Column_Name + '],0) as varChar(100)) collate SQL_LATIN1_GENERAL_CP1_CI_AS) + ''' + ''' + '', ''' + ' end +'
+	from information_schema.columns 
+	where TABLE_NAME = @tableName
+	and PATINDEX('%,' + COLUMN_NAME + ',%', @ignoreList) = 0
+	and DATA_TYPE not like '%text%'
+	and DATA_TYPE not like '%image%'
+	and DATA_TYPE not like '%binary%' 
+		
+	set @sqlTblCols = Substring(@sqlTblCols, 1 , len(@sqlTblCols) - 1)
+
+	set @sql = 'select ''' + cast(@logUserID as varChar(10)) + ''', ''' + cast(@borgid as varChar(10)) + ''', ''' + @application + ''', ''' + @tableName + ''', ''' + @action + ''', ''' + @page + ''', ''' + @info + ''', ''' + @version + ''', '''+ @primaryKey +' = '' + cast(i.'+ @primaryKey +' as varChar(10)), Substring(' + @sqlTblCols + ', 1 , len(' + @sqlTblCols + ') - 1) '
+	set @sql = @sql + 'From #inserted i inner join #deleted d on i.'+ @primaryKey +' = d.'+ @primaryKey +' where isnull(' + @sqlTblCols + ', '''') <> '''' ' 
+
+	insert into LOGMASTER (USERID, BORGID, APPLICATION, TABLENAME, ACTION, PAGE, INFO, VERSION, PRIMARYKEY, DETAILS)
+	exec sp_executesql @sql
+END   
+
+if @action = 'DELETE' or @action = 'INSERT'
+BEGIN
+	Select @sqlTblCols = @sqlTblCols + '''[' + Column_Name + ']:'' + rtrim(cast(IsNull(d.[' + Column_Name + '],0) as varChar(100)) collate SQL_LATIN1_GENERAL_CP1_CI_AS) + '', '' + '
+	from information_schema.columns 
+	where TABLE_NAME = @tableName
+	and PATINDEX('%,' + COLUMN_NAME + ',%', @ignoreList) = 0
+	and DATA_TYPE not like '%text%'
+	and DATA_TYPE not like '%image%'
+	and DATA_TYPE not like '%binary%' 
+		
+	set @sqlTblCols = Substring(@sqlTblCols, 1, len(@sqlTblCols) - 5) + ''''
+	
+	set @sql = 'select ''' + cast(@logUserID as varChar(10)) + ''', ''' + cast(@borgid as varChar(10)) + ''', ''' + @application + ''', ''' + @tableName + ''', ''' + @action + ''', ''' + @page + ''', ''' + @info + ''', ''' + @version + ''', '''+ @primaryKey +' = '' + cast(d.'+ @primaryKey +' as varChar(10)), ' + @sqlTblCols + ' '
+	set @sql = @sql + 'From '+ case when @action = 'DELETE' then '#deleted' else '#inserted' end +' d ' 
+ 
+	insert into LOGMASTER (USERID, BORGID, APPLICATION, TABLENAME, ACTION, PAGE, INFO, VERSION, PRIMARYKEY, DETAILS)
+	exec sp_executesql @sql
+END
+
+DROP TABLE #inserted
+DROP TABLE #deleted
+
+		
+ALTER TABLE [dbo].[USERS] ENABLE TRIGGER [LOGMASTERUSERS]

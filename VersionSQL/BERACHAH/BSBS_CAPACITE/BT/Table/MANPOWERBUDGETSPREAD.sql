@@ -1,0 +1,13 @@
+/****** Object:  Table [BT].[MANPOWERBUDGETSPREAD]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [BT].[MANPOWERBUDGETSPREAD](
+	[BUDGETSPREADID] [int] NOT NULL,
+	[BUDGETID] [int] NULL,
+	[PROJECTCODE] [int] NULL,
+	[MANPOWERCODE] [varchar](15) NULL,
+	[YEARPERIODCODE] [int] NULL,
+	[PERIODBUDGET] [decimal](18, 2) NULL,
+	[REVISIONID] [int] NULL
+) ON [PRIMARY]

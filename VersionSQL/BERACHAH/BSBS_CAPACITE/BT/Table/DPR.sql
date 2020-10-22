@@ -1,0 +1,15 @@
+/****** Object:  Table [BT].[DPR]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [BT].[DPR](
+	[DPRID] [int] NOT NULL,
+	[ProjectCode] [int] NULL,
+	[BOQNumber] [varchar](15) NULL,
+	[DPRDate] [datetime] NULL,
+	[DPRQty] [decimal](18, 4) NULL,
+ CONSTRAINT [PK__DPR__2BB15688C3049F54] PRIMARY KEY CLUSTERED 
+(
+	[DPRID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]

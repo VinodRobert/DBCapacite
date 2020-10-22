@@ -1,0 +1,10 @@
+/****** Object:  Procedure [BT].[spFetchSpreadDetails]    Committed by VersionSQL https://www.versionsql.com ******/
+
+CREATE PROCEDURE [BT].[spFetchSpreadDetails](@PROJECTCODE INT,@STARTPERIOD INT,@ENDPERIOD INT)
+AS
+
+SELECT  LTRIM(RTRIM(YPM.YEAR))+'/'+LTRIM(RTRIM(YPM.MONTHNAME)) AS PERIODNAME 
+FROM BT.YearPeriodMaster YPM WHERE YPM.YearPeriodID IN 
+(SELECT YEARPERIODCODE FROM BT.SALESSPREAD WHERE PROJECTCODE =@PROJECTCODE AND 
+                                                 YEARPERIODCODE BETWEEN @STARTPERIOD AND @ENDPERIOD) ORDER BY YPM.YearPeriodID
+ 

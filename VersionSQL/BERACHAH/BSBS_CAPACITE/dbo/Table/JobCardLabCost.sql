@@ -1,0 +1,76 @@
+/****** Object:  Table [dbo].[JobCardLabCost]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [dbo].[JobCardLabCost](
+	[LCID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[BorgIDHome] [int] NOT NULL,
+	[BorgIDTo] [int] NOT NULL,
+	[DivIDWorkshop] [int] NOT NULL,
+	[LCDate] [datetime] NOT NULL,
+	[LCDescription] [char](200) NOT NULL,
+	[LCAllocation] [char](30) NOT NULL,
+	[PeNumber] [char](10) NULL,
+	[ContractID] [nvarchar](10) NULL,
+	[DivIDTo] [int] NULL,
+	[DebtNumber] [char](10) NULL,
+	[JobCardID] [char](10) NULL,
+	[ActNumber] [char](10) NULL,
+	[UserID] [char](10) NOT NULL,
+	[LCSMRUnit] [char](10) NULL,
+	[LCSMR] [numeric](18, 2) NULL,
+	[LCLedgerCode] [char](10) NOT NULL,
+	[LCUnit] [char](10) NOT NULL,
+	[LCQuantity] [decimal](18, 2) NOT NULL,
+	[LCRate] [money] NOT NULL,
+	[LCDiscount] [money] NOT NULL,
+	[LCCurrency] [char](10) NOT NULL,
+	[LCVattype] [char](19) NOT NULL,
+	[LCVatamount] [money] NOT NULL,
+	[LCAmount] [money] NOT NULL,
+	[LCTotAmount] [money] NOT NULL,
+	[LCTechnician] [nvarchar](50) NULL,
+	[LCPosted] [bit] NOT NULL,
+	[LCTecID] [int] NULL,
+ CONSTRAINT [PK_JobCardLabCost] PRIMARY KEY CLUSTERED 
+(
+	[LCID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+) ON [PRIMARY]
+
+ALTER TABLE [dbo].[JobCardLabCost] ADD  CONSTRAINT [DF__JobCardLa__JobPo__5FA2ED47]  DEFAULT (0) FOR [LCPosted]
+ALTER TABLE [dbo].[JobCardLabCost]  WITH CHECK ADD  CONSTRAINT [FK_JobCardLabCost_ACTIVITIES] FOREIGN KEY([ActNumber])
+REFERENCES [dbo].[ACTIVITIES] ([ActNumber])
+ON UPDATE CASCADE
+ALTER TABLE [dbo].[JobCardLabCost] CHECK CONSTRAINT [FK_JobCardLabCost_ACTIVITIES]
+ALTER TABLE [dbo].[JobCardLabCost]  WITH CHECK ADD  CONSTRAINT [FK_JobCardLabCost_BORGS] FOREIGN KEY([BorgIDTo])
+REFERENCES [dbo].[BORGS] ([BORGID])
+ALTER TABLE [dbo].[JobCardLabCost] CHECK CONSTRAINT [FK_JobCardLabCost_BORGS]
+ALTER TABLE [dbo].[JobCardLabCost]  WITH CHECK ADD  CONSTRAINT [FK_JobCardLabCost_BORGS1] FOREIGN KEY([BorgIDTo])
+REFERENCES [dbo].[BORGS] ([BORGID])
+ALTER TABLE [dbo].[JobCardLabCost] CHECK CONSTRAINT [FK_JobCardLabCost_BORGS1]
+ALTER TABLE [dbo].[JobCardLabCost]  WITH CHECK ADD  CONSTRAINT [FK_JobCardLabCost_CONTRACTS] FOREIGN KEY([ContractID])
+REFERENCES [dbo].[CONTRACTS] ([CONTRNUMBER])
+ON UPDATE CASCADE
+ALTER TABLE [dbo].[JobCardLabCost] CHECK CONSTRAINT [FK_JobCardLabCost_CONTRACTS]
+ALTER TABLE [dbo].[JobCardLabCost]  WITH CHECK ADD  CONSTRAINT [FK_JobCardLabCost_DEBTORS] FOREIGN KEY([DebtNumber])
+REFERENCES [dbo].[DEBTORS] ([DebtNumber])
+ON UPDATE CASCADE
+ALTER TABLE [dbo].[JobCardLabCost] CHECK CONSTRAINT [FK_JobCardLabCost_DEBTORS]
+ALTER TABLE [dbo].[JobCardLabCost]  WITH CHECK ADD  CONSTRAINT [FK_JobCardLabCost_DIVISIONS] FOREIGN KEY([DivIDWorkshop])
+REFERENCES [dbo].[DIVISIONS] ([DivID])
+ON UPDATE CASCADE
+ALTER TABLE [dbo].[JobCardLabCost] CHECK CONSTRAINT [FK_JobCardLabCost_DIVISIONS]
+ALTER TABLE [dbo].[JobCardLabCost]  WITH NOCHECK ADD  CONSTRAINT [FK_JobCardLabCost_DIVISIONS1] FOREIGN KEY([DivIDTo])
+REFERENCES [dbo].[DIVISIONS] ([DivID])
+NOT FOR REPLICATION 
+ALTER TABLE [dbo].[JobCardLabCost] CHECK CONSTRAINT [FK_JobCardLabCost_DIVISIONS1]
+ALTER TABLE [dbo].[JobCardLabCost]  WITH CHECK ADD  CONSTRAINT [FK_JobCardLabCost_LEDGERCODES] FOREIGN KEY([LCLedgerCode])
+REFERENCES [dbo].[LEDGERCODES] ([LedgerCode])
+ON UPDATE CASCADE
+ALTER TABLE [dbo].[JobCardLabCost] CHECK CONSTRAINT [FK_JobCardLabCost_LEDGERCODES]
+ALTER TABLE [dbo].[JobCardLabCost]  WITH NOCHECK ADD  CONSTRAINT [FK_JobCardLabCost_PLANTANDEQ] FOREIGN KEY([PeNumber])
+REFERENCES [dbo].[PLANTANDEQ] ([PeNumber])
+ON UPDATE CASCADE
+NOT FOR REPLICATION 
+ALTER TABLE [dbo].[JobCardLabCost] CHECK CONSTRAINT [FK_JobCardLabCost_PLANTANDEQ]

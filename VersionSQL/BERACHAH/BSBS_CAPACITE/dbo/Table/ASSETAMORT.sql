@@ -1,0 +1,37 @@
+/****** Object:  Table [dbo].[ASSETAMORT]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [dbo].[ASSETAMORT](
+	[AssetID] [int] NOT NULL,
+	[AssetNum] [int] NOT NULL,
+	[AssetPer] [int] NOT NULL,
+	[AssetDate] [datetime] NOT NULL,
+	[AssetPay] [money] NOT NULL,
+	[AssetVAT] [money] NOT NULL,
+	[AssetCapital] [money] NOT NULL,
+	[AssetInterest] [money] NOT NULL,
+	[AssetCapBal] [money] NOT NULL,
+	[AssetDefCharges] [money] NOT NULL,
+	[AssetTotOut] [money] NOT NULL,
+	[AssetInterestRate] [numeric](18, 4) NOT NULL,
+	[AssetDays] [int] NOT NULL,
+	[AssetPost] [bit] NOT NULL,
+	[AssID] [int] IDENTITY(1,1) NOT NULL,
+	[ASSETDCADJ] [money] NOT NULL
+) ON [PRIMARY]
+
+ALTER TABLE [dbo].[ASSETAMORT] ADD  CONSTRAINT [DF_ASSETAMORT_AsssetID]  DEFAULT ((0)) FOR [AssetID]
+ALTER TABLE [dbo].[ASSETAMORT] ADD  CONSTRAINT [DF_ASSETAMORT_AssetNum]  DEFAULT ((0)) FOR [AssetNum]
+ALTER TABLE [dbo].[ASSETAMORT] ADD  CONSTRAINT [DF_ASSETAMORT_AssetPer]  DEFAULT ((0)) FOR [AssetPer]
+ALTER TABLE [dbo].[ASSETAMORT] ADD  CONSTRAINT [DF_ASSETAMORT_AssetDate]  DEFAULT ('') FOR [AssetDate]
+ALTER TABLE [dbo].[ASSETAMORT] ADD  CONSTRAINT [DF_ASSETAMORT_AssetPay]  DEFAULT ((0)) FOR [AssetPay]
+ALTER TABLE [dbo].[ASSETAMORT] ADD  CONSTRAINT [DF_ASSETAMORT_AssetVAT]  DEFAULT ((0)) FOR [AssetVAT]
+ALTER TABLE [dbo].[ASSETAMORT] ADD  CONSTRAINT [DF_ASSETAMORT_AssetCapital]  DEFAULT ((0)) FOR [AssetCapital]
+ALTER TABLE [dbo].[ASSETAMORT] ADD  CONSTRAINT [DF_ASSETAMORT_AssetInterest]  DEFAULT ((0)) FOR [AssetInterest]
+ALTER TABLE [dbo].[ASSETAMORT] ADD  CONSTRAINT [DF_ASSETAMORT_AssetCapBal]  DEFAULT ((0)) FOR [AssetCapBal]
+ALTER TABLE [dbo].[ASSETAMORT] ADD  CONSTRAINT [DF_ASSETAMORT_AssetDefCharges]  DEFAULT ((0)) FOR [AssetDefCharges]
+ALTER TABLE [dbo].[ASSETAMORT] ADD  CONSTRAINT [DF_ASSETAMORT_AssetTotOut]  DEFAULT ((0)) FOR [AssetTotOut]
+ALTER TABLE [dbo].[ASSETAMORT] ADD  CONSTRAINT [DF_ASSETAMORT_AssetDays]  DEFAULT ((0)) FOR [AssetDays]
+ALTER TABLE [dbo].[ASSETAMORT] ADD  CONSTRAINT [DF_ASSETAMORT_AssetPost]  DEFAULT ((0)) FOR [AssetPost]
+ALTER TABLE [dbo].[ASSETAMORT] ADD  CONSTRAINT [DF_ASSETAMORT_ASSETDCADJ]  DEFAULT ((0)) FOR [ASSETDCADJ]

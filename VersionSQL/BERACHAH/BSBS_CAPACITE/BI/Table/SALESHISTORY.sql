@@ -1,0 +1,52 @@
+/****** Object:  Table [BI].[SALESHISTORY]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [BI].[SALESHISTORY](
+	[SALESINDEX] [bigint] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[ORGID] [int] NULL,
+	[BORGNAME] [varchar](100) NULL,
+	[CILGSTIN] [varchar](20) NULL,
+	[DOCTYPE] [varchar](15) NULL,
+	[GSTTYPE] [varchar](20) NULL,
+	[FINYEAR] [int] NULL,
+	[PERIOD] [int] NULL,
+	[PERIODNAME] [varchar](15) NULL,
+	[TRANGRP] [int] NULL,
+	[TRANSID] [int] NULL,
+	[TRANSTYPE] [varchar](20) NULL,
+	[BATCHREF] [varchar](25) NULL,
+	[ORDERNO] [varchar](150) NULL,
+	[INVOICEDATE] [date] NULL,
+	[INVOICENUMBER] [varchar](50) NULL,
+	[TRANSACTIONDATE] [date] NULL,
+	[SUPPCODE] [varchar](20) NULL,
+	[SUPPLIERNAME] [varchar](250) NULL,
+	[SUPPLIERGSTN] [varchar](25) NULL,
+	[SUPPLIERCITY] [char](2) NULL,
+	[SUPPLIERCITYNAME] [varchar](100) NULL,
+	[ITEM] [varchar](400) NULL,
+	[LEDGERCODE] [char](15) NULL,
+	[LEDGERNAME] [varchar](250) NULL,
+	[QTY] [decimal](15, 2) NULL,
+	[UOM] [varchar](20) NULL,
+	[RATE] [decimal](18, 2) NULL,
+	[TAXABLE_VALUE] [decimal](18, 2) NULL,
+	[CGST_RATE] [decimal](18, 2) NULL,
+	[CGST_AMOUNT] [decimal](18, 2) NULL,
+	[SGST_RATE] [decimal](18, 2) NULL,
+	[SGST_AMOUNT] [decimal](18, 2) NULL,
+	[IGST_RATE] [decimal](18, 2) NULL,
+	[IGST_AMOUNT] [decimal](18, 2) NULL,
+	[CGST_INPUT_RCM_AMOUNT] [decimal](18, 2) NULL,
+	[CGST_OUTPUT_RCM_AMOUNT] [decimal](18, 2) NULL,
+	[SGST_INPUT_RCM_AMOUNT] [decimal](18, 2) NULL,
+	[SGST_OUTPUT_RCM_AMOUNT] [decimal](18, 2) NULL,
+	[IGST_INPUT_RCM_AMOUNT] [decimal](18, 2) NULL,
+	[IGST_OUTPUT_RCM_AMOUNT] [decimal](18, 2) NULL,
+	[GST_EXPENSE] [decimal](18, 2) NULL,
+ CONSTRAINT [PK_SALESHISTORY] PRIMARY KEY CLUSTERED 
+(
+	[SALESINDEX] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]

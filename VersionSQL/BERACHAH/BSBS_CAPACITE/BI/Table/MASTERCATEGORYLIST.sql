@@ -1,0 +1,9 @@
+/****** Object:  Table [BI].[MASTERCATEGORYLIST]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [BI].[MASTERCATEGORYLIST](
+	[PARTYCODE] [varchar](15) NULL,
+	[PARTYCATEGORY] [varchar](1) NULL,
+	[PARTYCATEGORYCODE] [int] NULL
+) ON [PRIMARY]

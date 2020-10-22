@@ -1,0 +1,7 @@
+/****** Object:  View [dbo].[bs_EMPLOYEE_TOTAL_LOANS_PAYMENTS]    Committed by VersionSQL https://www.versionsql.com ******/
+
+CREATE VIEW dbo.bs_EMPLOYEE_TOTAL_LOANS_PAYMENTS
+AS
+SELECT     PRLID, EMPNUMBER, SUM(PAYMENT) AS PAYMENTS
+FROM         dbo.EMPLOANSPAY
+GROUP BY PRLID, EMPNUMBER

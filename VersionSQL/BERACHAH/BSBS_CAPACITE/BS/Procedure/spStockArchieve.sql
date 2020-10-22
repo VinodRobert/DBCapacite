@@ -1,0 +1,9 @@
+/****** Object:  Procedure [BS].[spStockArchieve]    Committed by VersionSQL https://www.versionsql.com ******/
+
+CREATE PROCEDURE [BS].[spStockArchieve]
+AS
+INSERT INTO  BS.STOCKARCHIEVE 
+SELECT GETDATE(),STKSTORE,STKCODE,STKQUANTITY,STKCOSTRATE FROM INVENTORY 
+WHERE
+ StkQuantity>0 AND 
+ STKSTORE IN ( SELECT STORECODE  FROM INVSTORES WHERE LEFT(STORECODE,4) IN ('MS-9','SE-9') ) 

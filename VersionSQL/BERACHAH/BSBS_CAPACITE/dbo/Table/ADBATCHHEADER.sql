@@ -1,0 +1,32 @@
+/****** Object:  Table [dbo].[ADBATCHHEADER]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [dbo].[ADBATCHHEADER](
+	[HeaderID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[SiteRef] [char](50) NOT NULL,
+	[BatchRef] [char](50) NOT NULL,
+	[PAYROLLID] [int] NOT NULL,
+	[LockHolder] [int] NOT NULL,
+	[LockRequestor] [int] NOT NULL,
+	[valid] [bit] NOT NULL,
+	[posted] [bit] NOT NULL,
+	[totEmployees] [float] NULL,
+	[totRecords] [float] NULL,
+	[totAdsentDays] [float] NULL,
+	[UseHashEmployees] [bit] NOT NULL,
+	[UseHashRecords] [bit] NOT NULL,
+	[UseHashAdsentDays] [bit] NOT NULL,
+ CONSTRAINT [PK_ADBATCHHEADER] PRIMARY KEY CLUSTERED 
+(
+	[HeaderID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+) ON [PRIMARY]
+
+ALTER TABLE [dbo].[ADBATCHHEADER] ADD  CONSTRAINT [DF_ADBATCHHEADER_LockHolder]  DEFAULT ((0)) FOR [LockHolder]
+ALTER TABLE [dbo].[ADBATCHHEADER] ADD  CONSTRAINT [DF_ADBATCHHEADER_LockRequestor]  DEFAULT ((0)) FOR [LockRequestor]
+ALTER TABLE [dbo].[ADBATCHHEADER] ADD  CONSTRAINT [DF_ADBATCHHEADER_valid]  DEFAULT ((0)) FOR [valid]
+ALTER TABLE [dbo].[ADBATCHHEADER] ADD  CONSTRAINT [DF_ADBATCHHEADER_posted]  DEFAULT ((0)) FOR [posted]
+ALTER TABLE [dbo].[ADBATCHHEADER] ADD  CONSTRAINT [DF_ADBATCHHEADER_UseHashEmployees]  DEFAULT ((0)) FOR [UseHashEmployees]
+ALTER TABLE [dbo].[ADBATCHHEADER] ADD  CONSTRAINT [DF_ADBATCHHEADER_UseHashRecords]  DEFAULT ((0)) FOR [UseHashRecords]
+ALTER TABLE [dbo].[ADBATCHHEADER] ADD  CONSTRAINT [DF_ADBATCHHEADER_UseHashAdsentDays]  DEFAULT ((0)) FOR [UseHashAdsentDays]

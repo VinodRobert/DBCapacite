@@ -1,0 +1,26 @@
+/****** Object:  Table [dbo].[PlantServiceTypes]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [dbo].[PlantServiceTypes](
+	[ServID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[ServName] [nvarchar](250) NOT NULL,
+	[CatID] [int] NULL,
+	[ServDescripsin] [char](500) NOT NULL,
+	[ServIncToNextService] [numeric](18, 4) NULL,
+	[ServIncToNextServiceTime] [int] NULL,
+	[ServNextService] [int] NULL,
+ CONSTRAINT [PK_PlantServiceTypes] PRIMARY KEY CLUSTERED 
+(
+	[ServID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY],
+ CONSTRAINT [IX_PlantServiceTypes] UNIQUE NONCLUSTERED 
+(
+	[ServID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+) ON [PRIMARY]
+
+ALTER TABLE [dbo].[PlantServiceTypes]  WITH CHECK ADD  CONSTRAINT [FK_PlantServiceTypes_PLANTCATEGORIES] FOREIGN KEY([CatID])
+REFERENCES [dbo].[PLANTCATEGORIES] ([CatID])
+ON UPDATE CASCADE
+ALTER TABLE [dbo].[PlantServiceTypes] CHECK CONSTRAINT [FK_PlantServiceTypes_PLANTCATEGORIES]

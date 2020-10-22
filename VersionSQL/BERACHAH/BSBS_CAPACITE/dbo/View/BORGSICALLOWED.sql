@@ -1,0 +1,3 @@
+/****** Object:  View [dbo].[BORGSICALLOWED]    Committed by VersionSQL https://www.versionsql.com ******/
+
+  CREATE VIEW BORGSICALLOWED  AS  	SELECT BORGS.*, BORGSINIC.BORGIDINC  	FROM BORGS  	INNER JOIN BORGSINIC  	ON BORGS.BORGID = BORGSINIC.BORGID 

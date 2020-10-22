@@ -1,0 +1,9 @@
+/****** Object:  Table [BI].[MASTERCATEGORY]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [BI].[MASTERCATEGORY](
+	[MASTERCATEGORYCODE] [int] NULL,
+	[MASTERCATEGORYNAME] [varchar](50) NULL,
+	[PARTYTYPE] [int] NULL
+) ON [PRIMARY]

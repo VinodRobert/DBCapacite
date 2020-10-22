@@ -1,0 +1,318 @@
+/****** Object:  Function [dbo].[getWorkflowProc]    Committed by VersionSQL https://www.versionsql.com ******/
+
+-- =============================================
+-- Author: Matthew Spiller
+-- Create date: 03-11-2014
+-- Description:	returns workflows associated with a master table like Req or Journals
+-- NOTES:
+--  
+-- =============================================
+CREATE FUNCTION getWorkflowProc (@theID INT, @proc nvarchar(5), @lev char(1) = 'H')
+    RETURNS @t TABLE (
+		ID int,
+		DESCR nvarchar(250))
+AS
+BEGIN
+
+	if @proc = 'REQ'
+	BEGIN
+    insert into @t (ID, DESCR)
+		select DISTINCT WF.ID, WF.DESCR
+    from REQ R
+    INNER JOIN (
+		  SELECT REQID, GLCODEID, CONTRACTID, PENUMBER , TBORGID, STOCKID, DIVISIONID 
+		  FROM REQITEMS
+		  WHERE REQID = @theID
+		  GROUP BY REQID, GLCODEID, CONTRACTID, PENUMBER , TBORGID, STOCKID, DIVISIONID
+	  ) RI ON R.REQID = RI.REQID
+    LEFT OUTER JOIN LEDGERCODES L on L.LEDGERID = RI.GLCODEID
+    LEFT OUTER JOIN CONTRACTS C on C.CONTRID = RI.CONTRACTID and L.LEDGERALLOC = 'Contracts'
+    LEFT OUTER JOIN PLANTANDEQ P on P.PENUMBER = RI.PENUMBER and P.BORGID = RI.TBORGID and L.LEDGERALLOC = 'Plant'
+    LEFT OUTER JOIN INVENTORY S on S.STKID = RI.STOCKID and L.LEDGERALLOC = 'Balance Sheet'
+    LEFT OUTER JOIN CONTROLCODES CC on CC.CONTROLNAME = 'Stock' and L.LEDGERCODE between CC.CONTROLFROMGL and CC.CONTROLTOGL
+    LEFT OUTER JOIN INVSTORES ST on S.STKSTORE = ST.STORECODE and isnull(CC.CONTROLNAME, '') = 'Stock'
+    LEFT OUTER JOIN DIVISIONS D on D.DIVID = RI.DIVISIONID and L.LEDGERALLOC = 'Overheads'
+    CROSS APPLY dbo.GETWORKFLOW(R.BORGID,isnull(RI.TBORGID, R.BORGID), L.LEDGERCODE, isnull(C.CONTRNUMBER, isnull(ST.STORECODE, isnull(cast(D.DIVID as nvarchar(10)), isnull(P.PENUMBER, '')))), 'REQ', R.RECTYPE, @lev) WF
+    WHERE R.REQID = @theID
+    AND (R.REQSTATUSID in (163, 500) or (@lev = 'D'))
+    OPTION (FORCE ORDER)
+
+    insert into @t (ID, DESCR)
+		select DISTINCT WF.WHID, WF.DESCR
+		from REQ R
+		INNER JOIN WORKFLOWSTATUS WFS on WFS.THEID = R.REQID and WFS.[PROC] = @proc
+		INNER JOIN WORKFLOWDETAIL WFD on WFS.WDID = WFD.WDID
+		INNER JOIN WORKFLOWHEADER WF on WFD.WHID = WF.WHID 
+		WHERE R.REQID = @theID
+		AND R.REQSTATUSID not in (163, 500)
+	END
+
+  ---------------------------------------------------------------------
+
+  if @proc = 'JNL'
+	BEGIN
+    insert into @t (ID, DESCR)
+    select DISTINCT WF.ID, WF.DESCR
+    from JOURNALHEADER JH
+	  INNER JOIN (
+		  SELECT DISTINCT JNLHEADID, JnlLedgerCode, 
+      CASE WHEN JNLALLOC = 'CONTRACTS' THEN JNLCONTRACT ELSE '' END JNLCONTRACT, 
+      CASE WHEN JNLALLOC = 'PLANT' THEN JNLPLANT ELSE '' END JNLPLANT, 
+      CASE WHEN JNLALLOC = 'OVERHEADS' THEN JNLDIVISION ELSE '' END JNLDIVISION,     
+      JNLTOORG
+		  FROM JOURNALS 
+		  WHERE JnlHeadID = @theID
+	  ) JD ON JH.JnlHeadID = JD.JnlHeadID
+    LEFT OUTER JOIN LEDGERCODES L on L.LedgerCode = JD.JnlLedgerCode
+    LEFT OUTER JOIN CONTRACTS C on C.CONTRNUMBER = JD.JnlContract and L.LEDGERALLOC = 'Contracts'
+    LEFT OUTER JOIN PLANTANDEQ P on P.PENUMBER = JD.JnlPlant and P.BORGID = JD.JNLTOORG and L.LEDGERALLOC = 'Plant'
+    LEFT OUTER JOIN DIVISIONS D on D.DIVID = case when isnumeric(rtrim(JD.JnlDivision) + '.0') = 1 then JD.JnlDivision else '-1' end and L.LEDGERALLOC = 'Overheads'
+    CROSS APPLY dbo.GETWORKFLOW(JH.BORGID,isnull(JD.JNLTOORG, JH.BORGID), L.LEDGERCODE, isnull(C.CONTRNUMBER, isnull(cast(D.DIVID as nvarchar(10)), isnull(P.PENUMBER, ''))), 'JNL', JH.JNLTYPE, @lev) WF
+    WHERE JH.JnlHeadID = @theID 
+    AND (
+      (
+        JH.JnlHeadPosted = 0
+	      AND JH.JnlHeadSubmit = 0
+        AND JH.ARCHIVE = 0
+       ) 
+      or (@lev = 'D')
+    )
+    OPTION (FORCE ORDER)
+
+    insert into @t (ID, DESCR)
+    select DISTINCT WF.WHID, WF.DESCR
+    from JOURNALHEADER JH
+    INNER JOIN WORKFLOWSTATUS WFS on WFS.THEID = JH.JnlHeadID and WFS.[PROC] = 'JNL'
+    INNER JOIN WORKFLOWDETAIL WFD on WFS.WDID = WFD.WDID
+    INNER JOIN WORKFLOWHEADER WF on WFD.WHID = WF.WHID 
+    WHERE JH.JnlHeadID = @theID 
+    AND JH.JnlHeadPosted = 0
+    AND JH.JnlHeadSubmit = 1
+    AND JH.ARCHIVE = 0
+  END
+
+  ---------------------------------------------------------------------
+
+  if @proc = 'SCI'
+	BEGIN
+    insert into @t (ID, DESCR)
+    select DISTINCT WF.ID, WF.DESCR
+    from SUBCRECONS SCR
+    LEFT OUTER JOIN LEDGERCODES L ON L.LEDGERCODE = SCR.LEDGER
+	  LEFT OUTER JOIN SUBCONTRACTORS ON SUBCONTRACTORS.SUBID = SCR.SUBCONNUMBER
+	  LEFT OUTER JOIN LEDGERCODES L2 ON L2.LEDGERCODE = SUBCONTRACTORS.SUBGLCODE
+    LEFT OUTER JOIN CONTRACTS C on C.CONTRID = SCR.CONTRACT
+    LEFT OUTER JOIN PROJECTS P ON C.PROJID = P.PROJID
+    CROSS APPLY dbo.GETWORKFLOW(SCR.ORGID, isnull(P.BORGID, SCR.ORGID), ISNULL(L.LEDGERCODE, L2.LEDGERCODE), isnull(C.CONTRNUMBER, ''), 'SCI', '', @lev) WF
+    WHERE SCR.RECONID = @theID 
+    AND (
+      (
+        SCR.POSTED = 0
+	      AND SCR.SUBMITTED = 0
+       ) 
+      or (@lev = 'D')
+    )
+    OPTION (FORCE ORDER)
+
+    insert into @t (ID, DESCR)
+    select DISTINCT WF.WHID, WF.DESCR
+    from SUBCRECONS SCR
+    INNER JOIN WORKFLOWSTATUS WFS on WFS.THEID = SCR.RECONID and WFS.[PROC] = 'SCI'
+    INNER JOIN WORKFLOWDETAIL WFD on WFS.WDID = WFD.WDID
+    INNER JOIN WORKFLOWHEADER WF on WFD.WHID = WF.WHID 
+    WHERE SCR.RECONID = @theID 
+    AND SCR.POSTED = 0
+    AND SCR.SUBMITTED = 1
+  END
+
+  ---------------------------------------------------------------------
+
+  if @proc = 'DTI'
+	BEGIN
+    insert into @t (ID, DESCR)
+    select DISTINCT WF.ID, WF.DESCR
+    from DEBTRECONS DTR
+    LEFT OUTER JOIN LEDGERCODES L ON L.LEDGERCODE = DTR.LEDGER
+	  LEFT OUTER JOIN DEBTORS ON DEBTORS.DEBTID = DTR.SUBCONNUMBER
+	  LEFT OUTER JOIN LEDGERCODES L2 ON L2.LEDGERCODE = DEBTORS.DEBTGLCODE
+    LEFT OUTER JOIN CONTRACTS C on C.CONTRID = DTR.CONTRACT
+    LEFT OUTER JOIN PROJECTS P ON C.PROJID = P.PROJID
+    CROSS APPLY dbo.GETWORKFLOW(DTR.ORGID, isnull(P.BORGID, DTR.ORGID), ISNULL(L.LEDGERCODE, L2.LEDGERCODE), isnull(C.CONTRNUMBER, ''), 'DTI', '', @lev) WF
+    WHERE DTR.RECONID = @theID 
+    AND (
+      (
+        DTR.POSTED = 0
+	      AND DTR.SUBMITTED = 0
+       ) 
+      or (@lev = 'D')
+    )
+    OPTION (FORCE ORDER)
+
+    insert into @t (ID, DESCR)
+    select DISTINCT WF.WHID, WF.DESCR
+    from DEBTRECONS DTR
+    INNER JOIN WORKFLOWSTATUS WFS on WFS.THEID = DTR.RECONID and WFS.[PROC] = 'DTI'
+    INNER JOIN WORKFLOWDETAIL WFD on WFS.WDID = WFD.WDID
+    INNER JOIN WORKFLOWHEADER WF on WFD.WHID = WF.WHID 
+    WHERE DTR.RECONID = @theID 
+    AND DTR.POSTED = 0
+    AND DTR.SUBMITTED = 1
+  END
+
+  ---------------------------------------------------------------------
+
+  --WORKFLOWSTATUS (-1:Rejected, 0:Not submitted, 1:Submitted, 2:On WorkFlow, 3:Approved)
+
+  if @proc = 'PRLCC'
+	BEGIN
+    insert into @t (ID, DESCR)
+    select DISTINCT WF.ID, WF.DESCR
+    from CCBATCHHEADER CCH
+    INNER JOIN (
+		  SELECT HEADERID, LEDGERCODE, COSTALLOCATION
+		  FROM CCBATCHDETAIL
+		  WHERE HEADERID = @theID
+		  GROUP BY HEADERID, LEDGERCODE, COSTALLOCATION
+	  ) CCD ON CCH.HeaderID = CCD.HeaderID
+    INNER JOIN PAYROLLS PR ON PR.PAYROLLID = CCH.PAYROLLID AND PR.ENABLEWORKFLOWCC = 1
+    LEFT OUTER JOIN LEDGERCODES L on L.LedgerCode = CCD.LEDGERCODE
+    LEFT OUTER JOIN CONTRACTS C on C.CONTRNUMBER = CCD.COSTALLOCATION and L.LEDGERALLOC = 'Contracts'
+    LEFT OUTER JOIN PROJECTS PROJ on PROJ.PROJID = C.PROJID and L.LEDGERALLOC = 'Contracts'
+    LEFT OUTER JOIN PLANTANDEQ P on P.PENUMBER = CCD.COSTALLOCATION and L.LEDGERALLOC = 'Plant'
+    LEFT OUTER JOIN DIVISIONS D on D.DIVID = case when isnumeric(rtrim(CCD.COSTALLOCATION) + '.0') = 1 then CCD.COSTALLOCATION else '-1' end and L.LEDGERALLOC = 'Overheads'
+    CROSS APPLY dbo.GETWORKFLOW(PR.BORGID,isnull(PROJ.BORGID, isnull(D.BORGID, isnull(P.BORGID, PR.BORGID))), L.LEDGERCODE, isnull(C.CONTRNUMBER, isnull(cast(D.DIVID as nvarchar(10)), isnull(P.PENUMBER, ''))), 'PRLCC', '', @lev) WF
+    WHERE CCH.HeaderID = @theID 
+    AND (
+      (
+        CCH.POSTED = 0
+	      AND CCH.WORKFLOWSTATUS in (0, 1)
+       ) 
+      or (@lev = 'D')
+    )
+    OPTION (FORCE ORDER)
+
+    insert into @t (ID, DESCR)
+    select DISTINCT WF.WHID, WF.DESCR
+    from CCBATCHHEADER CCH
+    INNER JOIN PAYROLLS PR ON PR.PAYROLLID = CCH.PAYROLLID AND PR.ENABLEWORKFLOWCC = 1
+    INNER JOIN WORKFLOWSTATUS WFS on WFS.THEID = CCH.HeaderID and WFS.[PROC] = 'PRLCC'
+    INNER JOIN WORKFLOWDETAIL WFD on WFS.WDID = WFD.WDID
+    INNER JOIN WORKFLOWHEADER WF on WFD.WHID = WF.WHID 
+    WHERE CCH.HeaderID = @theID 
+    AND CCH.POSTED = 0
+    AND CCH.WORKFLOWSTATUS = 2
+  END
+
+  ---------------------------------------------------------------------
+  
+  if @proc = 'PRLAA'
+	BEGIN
+    insert into @t (ID, DESCR)
+    select DISTINCT WF.ID, WF.DESCR
+    from AABATCHHEADER AAH
+    INNER JOIN (
+		  SELECT HEADERID, LEDGERCODE, COSTALLOCATION 
+		  FROM AABATCHDETAIL
+		  WHERE HEADERID = @theID
+		  GROUP BY HEADERID, LEDGERCODE, COSTALLOCATION
+	  ) AAD ON AAH.HeaderID = AAD.HeaderID
+    INNER JOIN PAYROLLS PR ON PR.PAYROLLID = AAH.PAYROLLID AND PR.ENABLEWORKFLOWAA = 1
+    LEFT OUTER JOIN LEDGERCODES L on L.LedgerCode = AAD.LEDGERCODE
+    LEFT OUTER JOIN CONTRACTS C on C.CONTRNUMBER = AAD.COSTALLOCATION and L.LEDGERALLOC = 'Contracts'
+    LEFT OUTER JOIN PROJECTS PROJ on PROJ.PROJID = C.PROJID and L.LEDGERALLOC = 'Contracts'
+    LEFT OUTER JOIN PLANTANDEQ P on P.PENUMBER = AAD.COSTALLOCATION and L.LEDGERALLOC = 'Plant'
+    LEFT OUTER JOIN DIVISIONS D on D.DIVID = case when isnumeric(rtrim(AAD.COSTALLOCATION) + '.0') = 1 then AAD.COSTALLOCATION else '-1' end and L.LEDGERALLOC = 'Overheads'
+    CROSS APPLY dbo.GETWORKFLOW(PR.BORGID,isnull(PROJ.BORGID, isnull(D.BORGID, isnull(P.BORGID, PR.BORGID))), L.LEDGERCODE, isnull(C.CONTRNUMBER, isnull(cast(D.DIVID as nvarchar(10)), isnull(P.PENUMBER, ''))), 'PRLAA', '', @lev) WF
+    WHERE AAH.HeaderID = @theID 
+    AND (
+      (
+        AAH.POSTED = 0
+	      AND AAH.WORKFLOWSTATUS in (0, 1)
+       ) 
+      or (@lev = 'D')
+    )
+    OPTION (FORCE ORDER)
+
+    insert into @t (ID, DESCR)
+    select DISTINCT WF.WHID, WF.DESCR
+    from AABATCHHEADER AAH
+    INNER JOIN PAYROLLS PR ON PR.PAYROLLID = AAH.PAYROLLID AND PR.ENABLEWORKFLOWAA = 1
+    INNER JOIN WORKFLOWSTATUS WFS on WFS.THEID = AAH.HeaderID and WFS.[PROC] = 'PRLAA'
+    INNER JOIN WORKFLOWDETAIL WFD on WFS.WDID = WFD.WDID
+    INNER JOIN WORKFLOWHEADER WF on WFD.WHID = WF.WHID 
+    WHERE AAH.HeaderID = @theID 
+    AND AAH.POSTED = 0
+    AND AAH.WORKFLOWSTATUS = 2
+  END
+
+  ---------------------------------------------------------------------
+
+  if @proc = 'PRLLD'
+	BEGIN
+    insert into @t (ID, DESCR)
+    select DISTINCT WF.ID, WF.DESCR
+    from LDBATCHHEADER LDH
+    /*INNER JOIN LDBATCHDETAIL LDD ON LDH.HeaderID = LDD.HeaderID*/
+    INNER JOIN PAYROLLS PR ON PR.PAYROLLID = LDH.PAYROLLID AND PR.ENABLEWORKFLOWLD = 1
+    CROSS APPLY dbo.GETWORKFLOW(PR.BORGID, PR.BORGID, '', '', 'PRLLD', '', @lev) WF
+    WHERE LDH.HeaderID = @theID 
+    AND (
+      (
+        LDH.POSTED = 0
+	      AND LDH.WORKFLOWSTATUS in (0, 1)
+       ) 
+      or (@lev = 'D')
+    )
+    OPTION (FORCE ORDER)
+
+    insert into @t (ID, DESCR)
+    select DISTINCT WF.WHID, WF.DESCR
+    from LDBATCHHEADER LDH
+    INNER JOIN PAYROLLS PR ON PR.PAYROLLID = LDH.PAYROLLID AND PR.ENABLEWORKFLOWLD = 1
+    INNER JOIN WORKFLOWSTATUS WFS on WFS.THEID = LDH.HeaderID and WFS.[PROC] = 'PRLLD'
+    INNER JOIN WORKFLOWDETAIL WFD on WFS.WDID = WFD.WDID
+    INNER JOIN WORKFLOWHEADER WF on WFD.WHID = WF.WHID 
+    WHERE LDH.HeaderID = @theID 
+    AND LDH.POSTED = 0
+    AND LDH.WORKFLOWSTATUS = 2
+  END
+
+  ---------------------------------------------------------------------
+
+
+  if @proc = 'PRLSD'
+	BEGIN
+    insert into @t (ID, DESCR)
+    select DISTINCT WF.ID, WF.DESCR
+    from SDBATCHHEADER SDH
+    /*INNER JOIN SDBATCHDETAIL SDD ON SDH.HeaderID = SDD.HeaderID*/
+    INNER JOIN PAYROLLS PR ON PR.PAYROLLID = SDH.PAYROLLID AND PR.ENABLEWORKFLOWSD = 1
+    CROSS APPLY dbo.GETWORKFLOW(PR.BORGID, PR.BORGID, '', '', 'PRLSD', '', @lev) WF
+    WHERE SDH.HeaderID = @theID 
+    AND (
+      (
+        SDH.POSTED = 0
+	      AND SDH.WORKFLOWSTATUS in (0, 1)
+       ) 
+      or (@lev = 'D')
+    )
+    OPTION (FORCE ORDER)
+
+    insert into @t (ID, DESCR)
+    select DISTINCT WF.WHID, WF.DESCR
+    from SDBATCHHEADER SDH
+    INNER JOIN PAYROLLS PR ON PR.PAYROLLID = SDH.PAYROLLID AND PR.ENABLEWORKFLOWSD = 1
+    INNER JOIN WORKFLOWSTATUS WFS on WFS.THEID = SDH.HeaderID and WFS.[PROC] = 'PRLSD'
+    INNER JOIN WORKFLOWDETAIL WFD on WFS.WDID = WFD.WDID
+    INNER JOIN WORKFLOWHEADER WF on WFD.WHID = WF.WHID 
+    WHERE SDH.HeaderID = @theID 
+    AND SDH.POSTED = 0
+    AND SDH.WORKFLOWSTATUS = 2
+  END
+
+  ---------------------------------------------------------------------
+ 
+	RETURN
+END
+		
+		

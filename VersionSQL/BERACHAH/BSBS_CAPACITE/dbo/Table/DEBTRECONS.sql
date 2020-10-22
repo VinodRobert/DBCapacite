@@ -1,0 +1,308 @@
+/****** Object:  Table [dbo].[DEBTRECONS]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [dbo].[DEBTRECONS](
+	[OrgID] [int] NOT NULL,
+	[SubConNumber] [char](10) NULL,
+	[Contract] [int] NULL,
+	[Activity] [int] NULL,
+	[ValNo] [numeric](18, 0) NULL,
+	[Certno] [numeric](18, 0) NULL,
+	[ContValue] [money] NULL,
+	[WorkDoneTot] [money] NULL,
+	[WorkDonePrev] [money] NULL,
+	[WorkDoneThisMonth] [money] NULL,
+	[EscalationTot] [money] NULL,
+	[EscalationPrev] [money] NULL,
+	[EscalationThisMonth] [money] NULL,
+	[MOSTot] [money] NULL,
+	[MOSPrev] [money] NULL,
+	[MOSThisMonth] [money] NULL,
+	[AdvanceTot] [money] NULL,
+	[AdvancePrev] [money] NULL,
+	[AdvanceThisMonth] [money] NULL,
+	[AdditionalTot] [money] NULL,
+	[AdditionalPrev] [money] NULL,
+	[AdditionalThisMonth] [money] NULL,
+	[BFWDTot] [money] NULL,
+	[BFWDPrev] [money] NULL,
+	[BFWDThisMonth] [money] NULL,
+	[VATTot] [money] NULL,
+	[VATPrev] [money] NULL,
+	[VATThisMonth] [money] NULL,
+	[DiscountTot] [money] NULL,
+	[DiscountPrev] [money] NULL,
+	[DiscountThisMonth] [money] NULL,
+	[RetentionTot] [money] NULL,
+	[RetentionPrev] [money] NULL,
+	[RetentionThisMonth] [money] NULL,
+	[ContraTot] [money] NULL,
+	[ContraPrev] [money] NULL,
+	[ContraThisMonth] [money] NULL,
+	[WithholdTot] [money] NULL,
+	[WithholdPrev] [money] NULL,
+	[WithholdThisMonth] [money] NULL,
+	[WithholdPerc] [numeric](18, 3) NULL,
+	[AmountDue] [money] NULL,
+	[PrevPaid] [money] NULL,
+	[TotDue] [money] NULL,
+	[VATPerc] [decimal](18, 4) NOT NULL,
+	[VATAmount] [money] NULL,
+	[Paid] [money] NULL,
+	[Name] [char](10) NULL,
+	[SupName] [nvarchar](127) NOT NULL,
+	[Code] [char](10) NULL,
+	[Credno] [char](10) NULL,
+	[Ret1] [money] NULL,
+	[Ret2] [money] NULL,
+	[RCo1] [money] NULL,
+	[RCo2] [money] NULL,
+	[Disc] [money] NULL,
+	[Posted] [bit] NOT NULL,
+	[LPosted] [bit] NOT NULL,
+	[Printed] [bit] NOT NULL,
+	[SCType] [char](10) NULL,
+	[VATno] [char](10) NULL,
+	[Remark] [char](200) NULL,
+	[GLCode] [char](10) NULL,
+	[ReconID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+	[UserID] [nvarchar](15) NOT NULL,
+	[PostDate] [datetime] NULL,
+	[PostRef] [char](10) NULL,
+	[Orderno] [nvarchar](35) NULL,
+	[Interest] [money] NOT NULL,
+	[InterestTot] [money] NOT NULL,
+	[Currency] [char](3) NOT NULL,
+	[Exchrate] [float] NOT NULL,
+	[Contrexchrate] [float] NOT NULL,
+	[DomTot] [money] NULL,
+	[DomThisMonth] [money] NULL,
+	[DomPrev] [money] NULL,
+	[NomTot] [money] NULL,
+	[NomThisMonth] [money] NULL,
+	[NomPrev] [money] NULL,
+	[DirTot] [money] NULL,
+	[DirThisMonth] [money] NULL,
+	[DirPrev] [money] NULL,
+	[FltTot] [money] NULL,
+	[FltThisMonth] [money] NULL,
+	[FltPrev] [money] NULL,
+	[VALDONETOT] [money] NOT NULL,
+	[VALDONEPREV] [money] NOT NULL,
+	[VALDONETHISMONTH] [money] NOT NULL,
+	[MARGIN] [money] NOT NULL,
+	[VATONADV] [money] NOT NULL,
+	[VATONWDONE] [money] NOT NULL,
+	[RETPERC] [decimal](18, 4) NOT NULL,
+	[WithholdAMOUNT] [money] NOT NULL,
+	[DRAPPROVER] [int] NULL,
+	[DRAPPDATE] [datetime] NULL,
+	[DRPOSTBY] [int] NULL,
+	[DRPOSTDATE] [datetime] NULL,
+	[VatType] [nvarchar](100) NULL,
+	[WithholdID] [int] NULL,
+	[CERTNOPREV] [numeric](18, 0) NULL,
+	[FROMDATE] [datetime] NULL,
+	[BOQPOSTDETAIL] [bit] NOT NULL,
+	[LEDGER] [char](10) NULL,
+	[RETRELEASEDATE] [datetime] NULL,
+	[OVERRIDETAX] [int] NOT NULL,
+	[OVERRIDEWHT] [int] NOT NULL,
+	[WFVALUEAPPROVED] [bit] NOT NULL,
+	[SUBMITTED] [bit] NOT NULL,
+	[APPROVED] [bit] NOT NULL,
+	[REJECTED] [bit] NOT NULL,
+	[LOGUSERID] [int] NOT NULL,
+	[LOGDATETIME] [datetime] NOT NULL,
+	[INTERESTPREV] [money] NOT NULL,
+	[ReconHistID] [int] NOT NULL,
+	[ADVANCEPERC] [decimal](18, 4) NOT NULL,
+	[CLASSID] [int] NOT NULL,
+ CONSTRAINT [PK_DEBTRECONS] PRIMARY KEY CLUSTERED 
+(
+	[ReconID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_AdvancePrev]  DEFAULT (0) FOR [AdvancePrev]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_AdvanceThisMonth]  DEFAULT (0) FOR [AdvanceThisMonth]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_AdditionalTot]  DEFAULT (0) FOR [AdditionalTot]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_SUPNAME]  DEFAULT ('') FOR [SupName]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_Posted]  DEFAULT (0) FOR [Posted]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_LPosted]  DEFAULT (0) FOR [LPosted]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_Printed]  DEFAULT (0) FOR [Printed]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_USERID]  DEFAULT ('') FOR [UserID]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_Interest]  DEFAULT (0) FOR [Interest]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_InterestTot]  DEFAULT (0) FOR [InterestTot]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_Currency]  DEFAULT ('MZM') FOR [Currency]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_EXCHRATE]  DEFAULT ((0)) FOR [Exchrate]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_CONTREXCHRATE]  DEFAULT ((0)) FOR [Contrexchrate]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_DOMTOT]  DEFAULT ((0)) FOR [DomTot]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_DOMTHISMONTH]  DEFAULT ((0)) FOR [DomThisMonth]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_DOMPREV]  DEFAULT ((0)) FOR [DomPrev]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_NOMTOT]  DEFAULT ((0)) FOR [NomTot]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_NOMTHISMONTH]  DEFAULT ((0)) FOR [NomThisMonth]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_NOMPREV]  DEFAULT ((0)) FOR [NomPrev]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_DIRTOT]  DEFAULT ((0)) FOR [DirTot]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_DIRTHISMONTH]  DEFAULT ((0)) FOR [DirThisMonth]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_DIRPREV]  DEFAULT ((0)) FOR [DirPrev]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_FLTTOT]  DEFAULT ((0)) FOR [FltTot]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_FLTTHISMONTH]  DEFAULT ((0)) FOR [FltThisMonth]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_FLTPREV]  DEFAULT ((0)) FOR [FltPrev]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF__DEBTRECON__VALDO__73D26C78]  DEFAULT (0) FOR [VALDONETOT]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF__DEBTRECON__VALDO__74C690B1]  DEFAULT (0) FOR [VALDONEPREV]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF__DEBTRECON__VALDO__75BAB4EA]  DEFAULT (0) FOR [VALDONETHISMONTH]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_MARGIN]  DEFAULT (0) FOR [MARGIN]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  DEFAULT (0) FOR [VATONADV]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  DEFAULT (0) FOR [VATONWDONE]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  DEFAULT (0) FOR [RETPERC]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_WithholdAMOUNT]  DEFAULT ((0)) FOR [WithholdAMOUNT]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_DRAPPROVER]  DEFAULT ((-1)) FOR [DRAPPROVER]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_DRAPPDATE]  DEFAULT (getdate()) FOR [DRAPPDATE]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_DRPOSTBY]  DEFAULT ((-1)) FOR [DRPOSTBY]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_DRPOSTDATE]  DEFAULT (getdate()) FOR [DRPOSTDATE]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_VatType]  DEFAULT ('') FOR [VatType]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_BOQPOSTDETAIL]  DEFAULT ('0') FOR [BOQPOSTDETAIL]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_OVERRIDETAX]  DEFAULT ((0)) FOR [OVERRIDETAX]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_OVERRIDEWHT]  DEFAULT ((0)) FOR [OVERRIDEWHT]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_WFVALUEAPPROVED]  DEFAULT (N'0') FOR [WFVALUEAPPROVED]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_SUBMITTED]  DEFAULT (N'0') FOR [SUBMITTED]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_APPROVED]  DEFAULT (N'0') FOR [APPROVED]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_REJECTED]  DEFAULT (N'0') FOR [REJECTED]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_LOGUSERID]  DEFAULT ((-1)) FOR [LOGUSERID]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_LOGDATETIME]  DEFAULT (getdate()) FOR [LOGDATETIME]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_INTERESTPREV]  DEFAULT ((0)) FOR [INTERESTPREV]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_ReconHistID]  DEFAULT ((-1)) FOR [ReconHistID]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_ADVANCEPERC]  DEFAULT ((0)) FOR [ADVANCEPERC]
+ALTER TABLE [dbo].[DEBTRECONS] ADD  CONSTRAINT [DF_DEBTRECONS_CLASSID]  DEFAULT ((-1)) FOR [CLASSID]
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+
+CREATE TRIGGER [dbo].[Debtor_Archive_At_Insert]
+ON [dbo].[DEBTRECONS]
+FOR UPDATE,INSERT
+AS  
+DECLARE @RECONID INT
+DECLARE @CODE VARCHAR(10)
+DECLARE @STATUSCODE VARCHAR(15)
+DECLARE @EISTATUS VARCHAR(15)
+DECLARE @EXISTING INT
+SELECT TOP 1 @RECONID = RECONID,@CODE=CODE  FROM INSERTED 
+ 
+IF @CODE IN ('16.20','16.22')
+   SET @STATUSCODE='NA'
+ELSE
+   SET @STATUSCODE='OPEN'
+
+SET @EXISTING = 0
+SELECT @EXISTING=ISNULL(COUNT(*),0) FROM ATTRIBVALUE WHERE COLKEY=@RECONID AND TABLENAME='DEBTRECONS' AND ATTRIBUTE='E-Invoice' 
+IF @EXISTING=0 
+  INSERT INTO ATTRIBVALUE(COLKEY,TABLENAME,ATTRIBUTE,VALUE,USERID,LOGDATETIME,ARRAYINDEX)
+  SELECT @RECONID,'DEBTRECONS','E-Invoice',@STATUSCODE,227,GETDATE(),0
+--ELSE
+--  BEGIN
+--    SET @EISTATUS = 0
+--    SELECT @EISTATUS=ISNULL(EISTATUS,0) FROM EI.DEBTORINVOICEHEADER WHERE DEBTRECONID=@RECONID 
+--	IF @EISTATUS = 1 
+--	   UPDATE ATTRIBVALUE SET VALUE='DONE' WHERE COLKEY=@RECONID AND TABLENAME='DEBTRECONS' AND ATTRIBUTE='E-Invoice' 
+  --END 
+ALTER TABLE [dbo].[DEBTRECONS] ENABLE TRIGGER [Debtor_Archive_At_Insert]
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+
+CREATE TRIGGER LOGDEBTRECONS ON DEBTRECONS
+AFTER UPDATE, INSERT
+AS 
+
+SET NOCOUNT ON
+
+declare @columnName nvarchar(500)
+declare @keyColumn nvarchar(500)
+declare @tableName nvarchar(500)
+declare @sSql nvarchar(4000)
+declare @primaryKey nvarchar(500)
+declare @_ID nvarchar(500)
+declare @logUserID int
+declare @logDateTime datetime
+declare @context_info int
+
+SELECT @tableName = o.name
+FROM sysobjects t
+JOIN sysobjects o ON t.parent_obj = o.id
+WHERE t.id = @@PROCID
+
+set @context_info = -1
+set @primaryKey = ''
+set @logUserID = -1
+set @logDateTime = DATEADD(M, -1, getDate()) 
+
+
+/*GETS THE PRIMARY KEY COLUMNS*/
+SELECT COLUMN_NAME
+into #primanyKeys
+FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+WHERE OBJECTPROPERTY(OBJECT_ID(constraint_name), 'IsPrimaryKey') = 1
+AND table_name = @tableName
+
+select * into #inserted from INSERTED
+
+set @sSql = 'DECLARE attribCursor CURSOR FOR '
+set @sSql = @sSql + 'select '
+DECLARE keyCursor CURSOR FOR
+select COLUMN_NAME FROM #primanyKeys
+OPEN keyCursor
+FETCH NEXT FROM keyCursor into @keyColumn
+WHILE @@FETCH_STATUS=0
+BEGIN	
+	if @primaryKey <> '' 
+	BEGIN
+		set @sSql = @sSql + ' + '' AND '' + '
+	END
+	set @sSql = @sSql + ''''+ @keyColumn +'='' + '''''''' + cast(rtrim(' + @keyColumn + ') as nvarchar(100)) + '''''''' '
+	set @primaryKey = @keyColumn
+FETCH NEXT FROM keyCursor into @keyColumn
+END   
+CLOSE keyCursor
+DEALLOCATE keyCursor
+set @sSql = @sSql + 'as _ID '
+set @sSql = @sSql + 'FROM #inserted '
+ 
+exec sp_executesql @sSql
+
+SELECT @context_info = cast(replace(cast(CONTEXT_INFO as varchar(128)), char(0) COLLATE SQL_Latin1_General_CP1_CI_AS,'') as int) FROM master.dbo.sysprocesses WHERE spid = @@SPID
+
+select @logUserID = isnull(USERID, -1),
+@logDateTime = isnull(LOGDATETIME, DATEADD(M, -1, getDate()))
+from logcontext 
+where LOGID = @context_info
+	
+delete FROM LOGCONTEXT where LOGID = @context_info
+  
+OPEN attribCursor
+FETCH NEXT FROM attribCursor into @_ID
+
+WHILE @@FETCH_STATUS=0
+BEGIN	 
+  set @primaryKey = @_ID
+  
+  if DATEDIFF(s,@logDateTime, getDate()) > 5 or @logDateTime is null
+	BEGIN
+		set @logUserID= -1
+	END
+
+  set @sSql = 'UPDATE DEBTRECONS SET LOGUSERID = ' + cast(@logUserID as nvarchar(5)) + ', LOGDATETIME = getDate() WHERE ' + @primaryKey + ''
+	
+  exec sp_executesql @sSql
+
+	FETCH NEXT FROM attribCursor into @_ID
+END   
+
+close attribCursor
+DEALLOCATE attribCursor
+
+DROP TABLE #inserted
+DROP TABLE #primanyKeys
+
+		
+ALTER TABLE [dbo].[DEBTRECONS] ENABLE TRIGGER [LOGDEBTRECONS]

@@ -1,0 +1,13 @@
+/****** Object:  Procedure [BI].[spDateLimits]    Committed by VersionSQL https://www.versionsql.com ******/
+
+CREATE PROCEDURE BI.spDateLimits(@FINYEAR INT)
+AS
+
+DECLARE @STARTDATE VARCHAR(15)
+DECLARE @ENDDATE   VARCHAR(15)
+SET @STARTDATE = '01/04/'+LTRIM(RTRIM(STR(@FINYEAR-1)))
+SET @ENDDATE  = '31/03/'+LTRIM(RTRIM(STR(@FINYEAR)))
+SELECT @STARTDATE STARTDATE ,@ENDDATE ENDDATE
+
+
+ 

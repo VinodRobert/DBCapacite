@@ -1,0 +1,22 @@
+/****** Object:  Table [dbo].[TimeSheetClocking]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [dbo].[TimeSheetClocking](
+	[CLOCKINGID] [int] IDENTITY(1,1) NOT NULL,
+	[USERID] [int] NOT NULL,
+	[FOREMANEMPID] [int] NOT NULL,
+	[FOREMANDETAILSID] [int] NOT NULL,
+	[PAYROLLID] [int] NOT NULL,
+	[EMPID] [int] NOT NULL,
+	[CLOCKINGDATE] [date] NOT NULL,
+	[CLOCKINTIME] [time](7) NOT NULL,
+	[SITE] [nchar](10) NOT NULL,
+	[CLOCKOUTTIME] [time](7) NULL,
+	[EMPNAME] [nvarchar](75) NULL,
+	[EMPNUMBER] [nvarchar](15) NULL,
+ CONSTRAINT [PK_TimeSheetClocking] PRIMARY KEY CLUSTERED 
+(
+	[CLOCKINGID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]

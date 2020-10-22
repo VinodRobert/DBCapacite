@@ -1,0 +1,3 @@
+/****** Object:  Function [dbo].[SplitVal]    Committed by VersionSQL https://www.versionsql.com ******/
+
+CREATE FUNCTION dbo.SplitVal(@String nvarchar(4000), @Delimiter char(1), @position int) RETURNS nvarchar(4000) AS     BEGIN 		declare @Result nvarchar(4000)     declare @tempT table(iid int identity(1,1), items nvarchar(4000) COLLATE SQL_Latin1_General_CP1_CI_AS)     insert into @tempT     select * from split(@String, @Delimiter)     select @Result = items from @tempT where iid = @position     RETURN @Result END
